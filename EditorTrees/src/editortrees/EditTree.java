@@ -1,19 +1,22 @@
 package editortrees;
 
+import java.util.ArrayList;
 
 // A height-balanced binary tree with rank that could be the basis for a text editor.
 
 public class EditTree {
 
 	private Node root;
+	private final Node NULL_NODE = new Node();
 
 	/**
 	 * MILESTONE 1
 	 * Construct an empty tree
 	 */
 	public EditTree() {
-		
+		root = NULL_NODE;
 	}
+	
 
 	/**
 	 * MILESTONE 1
@@ -22,7 +25,7 @@ public class EditTree {
 	 * @param ch
 	 */
 	public EditTree(char ch) {
-
+		root = new Node(ch);
 	}
 
 	/**
@@ -65,7 +68,16 @@ public class EditTree {
 	 */
 	@Override
 	public String toString() {
-		return null; // replace by a real calculation.
+		if(root == NULL_NODE) {
+			return "";
+		}
+		ArrayList<Character> list = new ArrayList<Character>();
+		root.inOrder(list);
+		String formattedString = list.toString()
+			    .replace("[", "")  //remove the right bracket
+			    .replace("]", "")  //remove the left bracket
+			    .trim();
+		return formattedString; // replace by a real calculation.
 
 	}
 
@@ -117,7 +129,10 @@ public class EditTree {
 	 *            if pos is negative or too large for this tree
 	 */
 	public void add(char ch, int pos) throws IndexOutOfBoundsException {
-
+		if(root == NULL_NODE) {
+			root = new Node(ch);
+		}
+		root.addHelper(ch, pos);
 	}
 
 	/**
@@ -136,7 +151,7 @@ public class EditTree {
 	 * @return the height of this tree
 	 */
 	public int height() {
-		return -2; // replace by a real calculation.
+		return root.heightHelper(); // replace by a real calculation.
 	}
 
 	/**
