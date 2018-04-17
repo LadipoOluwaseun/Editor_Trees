@@ -47,7 +47,7 @@ public class Node {
 	// Feel free to add other fields that you find useful
 	public static final Node NULL_NODE = new Node();
 
-	public Node(Character data) {
+	public Node(Character data, Node parent) {
 		this.element = data;
 		this.left = NULL_NODE;
 		this.right = NULL_NODE;
@@ -55,7 +55,7 @@ public class Node {
 		this.balance = Code.SAME;
 		this.size = 1;
 		this.height = 0;
-		this.parent = NULL_NODE;
+		this.parent = parent;
 	}
 	// You will probably want to add several other methods
 
@@ -88,7 +88,10 @@ public class Node {
 		if (this == NULL_NODE) {
 			return 0;
 		}
-		return this.rank + this.right.size();
+//		if (this.left == NULL_NODE && this.right == NULL_NODE) {
+//			return 1;
+//		}
+		return this.rank + this.right.size() + 1;
 
 	}
 
@@ -120,7 +123,7 @@ public class Node {
 
 	public Node add(char ch, int pos, Container container) throws IndexOutOfBoundsException {
 		if (this == NULL_NODE) {
-			Node newNode = new Node(ch);
+			Node newNode = new Node(ch,this);
 			return newNode;
 		}
 		// TODO: add second case for position
@@ -148,7 +151,7 @@ public class Node {
 
 	public Node add(char ch, Container container) {
 		if (this.right == NULL_NODE) {
-			this.right = new Node(ch);
+			this.right = new Node(ch,this);
 		} else {
 			this.right.add(ch, container);
 		}
@@ -167,9 +170,10 @@ public class Node {
 		newRootNode.right = node;
 		node.left = rightChildOfLeft;
 		
+		node.rank = node.left.size();
 		newRootNode.rank = newRootNode.left.size();
 		newRootNode.height = newRootNode.height();
-		if (newRootNode.right != NULL_NODE) {
+		if (newRootNode.left != NULL_NODE) {
 			newRootNode.balance = Code.SAME;
 		}
 		node.height = node.height();
@@ -184,6 +188,8 @@ public class Node {
 		Node leftChildOfRight = newRootNode.left;
 		newRootNode.left = node;
 		node.right = leftChildOfRight;
+		
+		node.rank = node.left.size();
 		newRootNode.rank = newRootNode.left.size();
 		newRootNode.height = newRootNode.height();
 		if (newRootNode.right != NULL_NODE) {
@@ -237,13 +243,13 @@ public class Node {
 			return singleRightRotate(this);
 		}
 		// Left Right Case
-		else if (this.balance.equals(Code.RIGHT) && this.rank > this.left.rank) {
+		else if (this.balance.equals(Code.RIGHT) && this.right.balance.equals(Code.LEFT)) {
 			container.rotationCount = container.rotationCount + 2;
 			return doubleLeftRotate(this);
 		}
 
 		// Right Left Case
-		else if (this.balance.equals(Code.LEFT) && this.rank < this.right.rank) {
+		else if (this.balance.equals(Code.LEFT) && this.left.balance.equals(Code.RIGHT)) {
 			container.rotationCount = container.rotationCount + 2;
 			return doubleRightRotate(this);
 		}

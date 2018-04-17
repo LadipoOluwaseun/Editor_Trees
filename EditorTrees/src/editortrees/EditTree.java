@@ -26,7 +26,7 @@ public class EditTree {
 	 * @param ch
 	 */
 	public EditTree(char ch) {
-		root = new Node(ch);
+		root = new Node(ch,NULL_NODE);
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class EditTree {
 		// 2. Unit tests are cumulative, and many things are based on add(), so
 		// make sure that you get this one correct.
 		if (this.root == NULL_NODE) {
-			this.root = new Node(ch);
+			this.root = new Node(ch,NULL_NODE);
 		}
 		else {
 			this.root = this.root.add(ch, container);
