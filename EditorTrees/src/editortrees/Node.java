@@ -11,16 +11,20 @@ import editortrees.EditTree.Container;
 public class Node {
 
 	enum Code {
+//		SPECIAL_RIGHT,SPECIAL_LEFT;
 		SAME, LEFT, RIGHT;
 		// Used in the displayer and debug string
 		public String toString() {
 			switch (this) {
 			case LEFT:
 				return "/";
+			
 			case SAME:
 				return "=";
 			case RIGHT:
 				return "\\";
+//			case SPECIAL_RIGHT:
+//				return "\\\\";
 			default:
 				throw new IllegalStateException();
 			}
@@ -85,6 +89,7 @@ public class Node {
 			return 0;
 		}
 		return this.rank + this.right.size();
+
 	}
 
 	public ArrayList<Character> inOrder(ArrayList<Character> list) {
@@ -137,11 +142,11 @@ public class Node {
 //		this.height = 1 + Math.max(this.left.height(), this.right.height());
 //
 		this.updateBalanceCodes();
-		this.checkBalance(container);
-		return this;
+		
+		return this.checkBalance(container);
 	}
 
-	public void add(char ch, Container container) {
+	public Node add(char ch, Container container) {
 		if (this.right == NULL_NODE) {
 			this.right = new Node(ch);
 		} else {
@@ -151,7 +156,7 @@ public class Node {
 		// this.right.height);
 		//
 		this.updateBalanceCodes();
-		this.checkBalance(container);
+		return this.checkBalance(container); 
 		
 
 	}
@@ -161,8 +166,12 @@ public class Node {
 		Node rightChildOfLeft = newRootNode.right;
 		newRootNode.right = node;
 		node.left = rightChildOfLeft;
+		
 		newRootNode.rank = newRootNode.left.size();
 		newRootNode.height = newRootNode.height();
+		if (newRootNode.right != NULL_NODE) {
+			newRootNode.balance = Code.SAME;
+		}
 		node.height = node.height();
 		newRootNode.balance = Code.SAME;
 		node.balance = Code.SAME;
@@ -177,6 +186,9 @@ public class Node {
 		node.right = leftChildOfRight;
 		newRootNode.rank = newRootNode.left.size();
 		newRootNode.height = newRootNode.height();
+		if (newRootNode.right != NULL_NODE) {
+			newRootNode.balance = Code.SAME;
+		}
 		node.height = node.height();
 		newRootNode.balance = Code.SAME;
 		node.balance = Code.SAME;
@@ -211,36 +223,34 @@ public class Node {
 		else if (right.height - left.height == -1) {
 			this.balance = Code.LEFT;
 		}
-//		Special Cases 
-//		if (right.height - left.height < -1) {
-//		this.balance = Code.SP_LEFT;
-//	}
-//	if (right.height - left.height > 1) {
-//		this.balance = Code.SP_RIGHT;
-//	}
 	}
-	public void checkBalance(Container container) {
+	public Node checkBalance(Container container) {
 		//Left Case
+
 		if (this.balance.equals(Code.RIGHT) && this.right.balance.equals(Code.RIGHT)) {
 			container.rotationCount++;
-			singleRightRotate(this);
+			return singleLeftRotate(this);
 		}
 		// Right Case
-		if (this.balance.equals(Code.LEFT)  && this.left.balance.equals(Code.LEFT)) {
+		else if (this.balance.equals(Code.LEFT)  && this.left.balance.equals(Code.LEFT)) {
 			container.rotationCount++;
-			singleLeftRotate(this);
+			return singleRightRotate(this);
 		}
 		// Left Right Case
-		if (this.balance.equals(Code.RIGHT) && this.rank > this.left.rank) {
+		else if (this.balance.equals(Code.RIGHT) && this.rank > this.left.rank) {
 			container.rotationCount = container.rotationCount + 2;
-			doubleLeftRotate(this);
+			return doubleLeftRotate(this);
 		}
 
 		// Right Left Case
-		if (this.balance.equals(Code.LEFT) && this.rank < this.right.rank) {
+		else if (this.balance.equals(Code.LEFT) && this.rank < this.right.rank) {
 			container.rotationCount = container.rotationCount + 2;
-			doubleRightRotate(this);
+			return doubleRightRotate(this);
 		}
+		else{
+			return this;
+		}
+		
 	}
 
 }

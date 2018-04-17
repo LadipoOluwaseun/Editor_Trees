@@ -126,7 +126,7 @@ public class EditTree {
 			this.root = new Node(ch);
 		}
 		else {
-			this.root.add(ch, container);
+			this.root = this.root.add(ch, container);
 		}
 		
 	}
