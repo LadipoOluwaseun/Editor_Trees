@@ -139,32 +139,66 @@ public class Node {
 	public void addHelper(char ch, Container container) {
 		if (this.right == NULL_NODE) {
 			this.right = new Node(ch);
-			if (this.left == NULL_NODE) {
-				this.balance = Code.RIGHT;
-				//rotate
-			}
-			else {
-				this.balance = Code.SAME;
-			}	
+//			if (this.left == NULL_NODE) {
+//				this.balance = Code.RIGHT;
+//				//rotate
+//			}
+//			else {
+//				this.balance = Code.SAME;
+//			}	
 		}
 		else {
 			this.right.addHelper(ch, container);
 		}	
+		
+		
 	}
 	
 	public Node singleRightRotate(Node node) {
+		Node newRootNode = node.left;
+		Node rightChildOfLeft = newRootNode.right;
+		newRootNode.right = node;
+		node.left = rightChildOfLeft;
+		newRootNode.rank = 1;
+		newRootNode.heightHelper();
+		node.heightHelper();
+		return newRootNode;
 		
-		return null;
 	}
 	
-	public Node singleLeftRotate(Node child, Node Parent) {
-		parent.right = child.left;
-		child.left = parent;
-		parent.balance = Code.SAME;
-		child.balance = Code.SAME;
-		parent.rank = parent.left.size;
-		child.rank = child.left.size;
-		return child;
+	public Node singleLeftRotate(Node node) {
+		Node newRootNode = node.right;
+		Node leftChildOfRight = newRootNode.left;
+		newRootNode.left = node;
+		node.right = leftChildOfRight;
+		newRootNode.rank = 1;
+		newRootNode.heightHelper();
+		node.heightHelper();
+		return newRootNode;
+		//		Node child = parent.right;
+//		parent.right = child.left;
+//		child.left = parent;
+//		parent.balance = Code.SAME;
+//		child.balance = Code.SAME;
+//		parent.rank = parent.left.size;
+//		child.rank = child.left.size;
+//		return child;
+	}
+//	right-left rotation
+	public Node doubleRightRotate(Node node) {
+		node.right = singleRightRotate(node.right);
+		return singleLeftRotate(node);
+	}
+//	left-right rotation
+	public Node doubleLeftRotate(Node node) {
+		node.left = singleRightRotate(node.left);
+		return singleRightRotate(node);
+	}
+	public int getBalance(Node node) {
+		if (node == NULL_NODE) {
+			return 0;
+		}
+		return node.left.heightHelper() - node.right.heightHelper();
 	}
 	
 	
