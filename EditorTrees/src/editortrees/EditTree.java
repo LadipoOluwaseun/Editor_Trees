@@ -1,4 +1,5 @@
 package editortrees;
+import static editortrees.Node.NULL_NODE;
 
 import java.util.ArrayList;
 
@@ -7,8 +8,6 @@ import java.util.ArrayList;
 public class EditTree {
 
 	private Node root;
-	private final Node NULL_NODE = new Node();
-
 	/**
 	 * MILESTONE 1
 	 * Construct an empty tree
@@ -75,7 +74,8 @@ public class EditTree {
 		root.inOrder(list);
 		String formattedString = list.toString()
 			    .replace("[", "")  //remove the right bracket
-			    .replace("]", "")  //remove the left bracket
+			    .replace("]", "")//remove the left bracket
+			    .replace(", ", "")
 			    .trim();
 		return formattedString; // replace by a real calculation.
 
@@ -116,7 +116,13 @@ public class EditTree {
 		// you!
 		// 2. Unit tests are cumulative, and many things are based on add(), so
 		// make sure that you get this one correct.
-
+		if (this.root == NULL_NODE) {
+			this.root = new Node(ch);
+		}
+		else {
+			this.root.addHelper(ch);
+		}
+		
 	}
 
 	/**
@@ -129,10 +135,8 @@ public class EditTree {
 	 *            if pos is negative or too large for this tree
 	 */
 	public void add(char ch, int pos) throws IndexOutOfBoundsException {
-		if(root == NULL_NODE) {
-			root = new Node(ch);
-		}
-		root.addHelper(ch, pos);
+		
+		this.root = root.addHelper(ch, pos);
 	}
 
 	/**
@@ -160,7 +164,7 @@ public class EditTree {
 	 *         not counting the NULL_NODE if you have one.
 	 */
 	public int size() {
-		return -1; // replace by a real calculation.
+		return this.root.sizeHelper(); // replace by a real calculation.
 	}
 	
 	

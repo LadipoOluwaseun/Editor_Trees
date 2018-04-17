@@ -38,7 +38,7 @@ public class Node {
 	
 	// Node parent;  // You may want this field.
 	// Feel free to add other fields that you find useful
-	public static Node NULL_NODE = new Node();
+	public static final Node NULL_NODE = new Node();
 
 	public Node(Character data) {
 		this.element = data;
@@ -77,8 +77,11 @@ public class Node {
 	    }	
 	}
 
-	public int size() {
-		return -1;
+	public int sizeHelper() {
+		if (this == NULL_NODE) {
+			return 0;
+		}
+		return this.rank + this.right.sizeHelper();
 	}
 
 	public ArrayList<Character> inOrder(ArrayList<Character> list) {
@@ -92,9 +95,39 @@ public class Node {
 		return list;
 	}
 
-	public void addHelper(char ch, int pos) throws IndexOutOfBoundsException {
+	public Node addHelper(char ch, int pos) throws IndexOutOfBoundsException {
+		if(this == NULL_NODE) {
+			Node newNode = new Node(ch);
+			return newNode;
+		}
 		if(pos < 0) {
 			throw new IndexOutOfBoundsException();
 		}
+//		Case of pos > root node
+//		Subtract pos - (root node pos + 1) add to this pos to the right
+		else if (pos > this.rank) {
+			this.right = this.right.addHelper(ch, (pos - rank - 1));
+		}
+		else if (pos <= this.rank ) {
+//			System.out.println(rank);
+			rank ++;
+			this.left = this.left.addHelper(ch, pos);
+		}
+		
+		
+		return this;
+		
+//		Case of pos < root node
+		
+//		Comparing rank instead of value in node
+	}
+
+	public void addHelper(char ch) {
+		if (this.right == NULL_NODE) {
+			this.right = new Node(ch);
+		}
+		this.right.addHelper(ch);
+		// TODO Auto-generated method stub.
+		
 	}
 }
