@@ -9,36 +9,37 @@ import editortrees.EditTree.Container;
 // belong to two different trees.
 
 public class Node {
-	
+
 	enum Code {
 		SAME, LEFT, RIGHT;
 		// Used in the displayer and debug string
 		public String toString() {
 			switch (this) {
-				case LEFT:
-					return "/";
-				case SAME:
-					return "=";
-				case RIGHT:
-					return "\\";
-				default:
-					throw new IllegalStateException();
+			case LEFT:
+				return "/";
+			case SAME:
+				return "=";
+			case RIGHT:
+				return "\\";
+			default:
+				throw new IllegalStateException();
 			}
 		}
 	}
-	
-	// The fields would normally be private, but for the purposes of this class, 
-	// we want to be able to test the results of the algorithms in addition to the
+
+	// The fields would normally be private, but for the purposes of this class,
+	// we want to be able to test the results of the algorithms in addition to
+	// the
 	// "publicly visible" effects
-	
-	char element;            
+
+	char element;
 	Node left, right; // subtrees
-	int rank;         // inorder position of this node within its own subtree.
-	Code balance; 
+	int rank; // inorder position of this node within its own subtree.
+	Code balance;
 	int size;
 	int height;
-	Node parent;  
-	
+	Node parent;
+
 	// Feel free to add other fields that you find useful
 	public static final Node NULL_NODE = new Node();
 
@@ -59,25 +60,31 @@ public class Node {
 		this.right = null;
 		this.height = -1;
 		this.size = 0;
-		
-		
+
 	}
 
-	// For the following methods, you should fill in the details so that they work correctly
+	// For the following methods, you should fill in the details so that they
+	// work correctly
 	public int heightHelper() {
 		if (this.height == -1) {
 			return -1;
 		}
-		
-	    int leftHeight = this.left.heightHelper();
-	    int rightHeight = this.right.heightHelper();
 
-	    if (leftHeight > rightHeight) {
-	        return leftHeight + 1;
-	    } 
-	    else {
-	        return rightHeight + 1;
-	    }	
+		int leftHeight = this.left.heightHelper();
+		int rightHeight = this.right.heightHelper();
+
+		if (leftHeight > rightHeight) {
+			return leftHeight + 1;
+		} else {
+			return rightHeight + 1;
+		}
+	}
+
+	public int height() {
+		if (this == NULL_NODE)
+			return 0;
+
+		return this.height;
 	}
 
 	public int sizeHelper() {
@@ -88,149 +95,156 @@ public class Node {
 	}
 
 	public ArrayList<Character> inOrder(ArrayList<Character> list) {
-		if(left != NULL_NODE) {
+		if (left != NULL_NODE) {
 			left.inOrder(list);
 		}
 		list.add(this.element);
-		if(right != NULL_NODE) {
+		if (right != NULL_NODE) {
 			right.inOrder(list);
 		}
 		return list;
 	}
+
 	public ArrayList<String> inOrderDebug(ArrayList<String> list) {
 		String toAdd = new String();
 		toAdd += this.element;
 		toAdd += this.rank;
 		toAdd += this.balance;
 		list.add(toAdd);
-		if(left != NULL_NODE) {
+		if (left != NULL_NODE) {
 			left.inOrderDebug(list);
 		}
-		if(right != NULL_NODE) {
+		if (right != NULL_NODE) {
 			right.inOrderDebug(list);
 		}
 		return list;
 	}
 
 	public Node addHelper(char ch, int pos, Container container) throws IndexOutOfBoundsException {
-		if(this == NULL_NODE) {
+		if (this == NULL_NODE) {
 			Node newNode = new Node(ch);
 			return newNode;
 		}
-		//TODO: add second case for position 
-		if(pos < 0) {
+		// TODO: add second case for position
+		if (pos < 0) {
 			throw new IndexOutOfBoundsException();
 		}
 
-		//add to right	
+		// add to right
 		else if (pos > this.rank) {
 			this.right = this.right.addHelper(ch, (pos - rank - 1), container);
 		}
-		//add to left
-		else if (pos <= this.rank ) {
-			rank ++;
+		// add to left
+		else if (pos <= this.rank) {
+			rank++;
 			this.left = this.left.addHelper(ch, pos, container);
 		}
-		//call balance method 
-		//three cases left, right, and equal
-//		this.height = 1 + Math.max(this.left.heightHelper(),
-//                this.right.heightHelper());
-//		
-//		int balance = getBalance(this);
-//		this.checkBalance(balance,container);
+		// call balance method
+		// three cases left, right, and equal
+//		this.height = 1 + Math.max(this.left.height(), this.right.height());
+//
+//		this.updateBalanceCodes()
+//		this.checkBalance(container);
 		return this;
 	}
 
 	public void addHelper(char ch, Container container) {
 		if (this.right == NULL_NODE) {
 			this.right = new Node(ch);
-//			if (this.left == NULL_NODE) {
-//				this.balance = Code.RIGHT;
-//				//rotate
-//			}
-//			else {
-//				this.balance = Code.SAME;
-//			}	
-		}
-		else {
+		} else {
 			this.right.addHelper(ch, container);
-		}	
-//		this.height = 1 + Math.max(this.left.heightHelper(),
-//                this.right.heightHelper());
-//		
-//		int balance = getBalance(this);
-//		this.checkBalance(balance, container);
+		}
+		this.updateBalanceCodes();
+		// this.height = 1 + Math.max(this.left.height,
+		// this.right.height);
+		//
+//		this.updateBalanceCodes()
+//		this.checkBalance(container);
 		
+
 	}
-	
+
 	public Node singleRightRotate(Node node) {
 		Node newRootNode = node.left;
 		Node rightChildOfLeft = newRootNode.right;
 		newRootNode.right = node;
 		node.left = rightChildOfLeft;
 		newRootNode.rank = 1;
-		newRootNode.heightHelper();
-		node.heightHelper();
+		newRootNode.height = newRootNode.heightHelper();
+		node.height = node.heightHelper();
 		return newRootNode;
-		
+
 	}
-	
+
 	public Node singleLeftRotate(Node node) {
 		Node newRootNode = node.right;
 		Node leftChildOfRight = newRootNode.left;
 		newRootNode.left = node;
 		node.right = leftChildOfRight;
 		newRootNode.rank = 1;
-		newRootNode.heightHelper();
-		node.heightHelper();
+		newRootNode.height = newRootNode.heightHelper();
+		node.height = node.heightHelper();
 		return newRootNode;
-		//		Node child = parent.right;
-//		parent.right = child.left;
-//		child.left = parent;
-//		parent.balance = Code.SAME;
-//		child.balance = Code.SAME;
-//		parent.rank = parent.left.size;
-//		child.rank = child.left.size;
-//		return child;
 	}
-//	right-left rotation
+
+	// right-left rotation
 	public Node doubleRightRotate(Node node) {
 		node.right = singleRightRotate(node.right);
 		return singleLeftRotate(node);
 	}
-//	left-right rotation
+
+	// left-right rotation
 	public Node doubleLeftRotate(Node node) {
 		node.left = singleRightRotate(node.left);
 		return singleRightRotate(node);
 	}
+
 	public int getBalance(Node node) {
 		if (node == NULL_NODE) {
 			return 0;
 		}
-		return node.left.height- node.right.height;
+		return node.left.height - node.right.height;
 	}
-	public void checkBalance(int balance, Container container) {
-		if (balance > 1 && this.rank < this.left.rank)
-			container.rotationCount ++;
-            singleRightRotate(this);
- 
-        // Right Right Case
-        if (balance < -1 && this.rank > this.right.rank)
-        	container.rotationCount ++;
-            singleLeftRotate(this);
- 
-        // Left Right Case
-        if (balance > 1 && this.rank > this.left.rank) {
-        	container.rotationCount = container.rotationCount +2;
-            doubleLeftRotate(this);
-        }
- 
-        // Right Left Case
-        if (balance < -1 && this.rank < this.right.rank) {
-        	container.rotationCount = container.rotationCount +2;
-            doubleRightRotate(this);
-        }
+	public void updateBalanceCodes() {
+		if (right.height - left.height == 1) {
+			this.balance = Code.RIGHT;
+		}
+		else if (left.height - right.height == 0) {
+			balance = Code.SAME;
+		}
+		else if (right.height - left.height == -1) {
+			this.balance = Code.LEFT;
+		}
+//		Special Cases 
+//		if (right.height - left.height < -1) {
+//		this.balance = Code.SP_LEFT;
+//	}
+//	if (right.height - left.height > 1) {
+//		this.balance = Code.SP_RIGHT;
+//	}
 	}
-	
-	
+	public void checkBalance(Container container) {
+		//Left Left Case
+		if (this.balance.equals(Code.RIGHT) && this.rank < this.left.rank)
+			container.rotationCount++;
+			singleRightRotate(this);
+
+		// Right Right Case
+		if (this.balance.equals(Code.LEFT)  && this.rank > this.right.rank)
+			container.rotationCount++;
+			singleLeftRotate(this);
+
+		// Left Right Case
+		if (this.balance.equals(Code.RIGHT) && this.rank > this.left.rank) {
+			container.rotationCount = container.rotationCount + 2;
+			doubleLeftRotate(this);
+		}
+
+		// Right Left Case
+		if (this.balance.equals(Code.LEFT) && this.rank < this.right.rank) {
+			container.rotationCount = container.rotationCount + 2;
+			doubleRightRotate(this);
+		}
+	}
+
 }
