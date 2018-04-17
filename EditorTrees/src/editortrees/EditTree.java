@@ -126,7 +126,7 @@ public class EditTree {
 			this.root = new Node(ch);
 		}
 		else {
-			this.root.addHelper(ch, container);
+			this.root.add(ch, container);
 		}
 		
 	}
@@ -141,7 +141,7 @@ public class EditTree {
 	 *            if pos is negative or too large for this tree
 	 */
 	public void add(char ch, int pos) throws IndexOutOfBoundsException {
-		this.root = root.addHelper(ch, pos, container);
+		this.root = root.add(ch, pos, container);
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class EditTree {
 	 * @return the height of this tree
 	 */
 	public int height() {
-		return root.heightHelper(); // replace by a real calculation.
+		return root.height(); // replace by a real calculation.
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class EditTree {
 	 *         not counting the NULL_NODE if you have one.
 	 */
 	public int size() {
-		return this.root.sizeHelper(); // replace by a real calculation.
+		return this.root.size(); // replace by a real calculation.
 	}
 	
 	
