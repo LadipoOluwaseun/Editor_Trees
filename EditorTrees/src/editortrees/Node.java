@@ -133,6 +133,11 @@ public class Node {
 		}
 		//call balance method 
 		//three cases left, right, and equal
+//		this.height = 1 + Math.max(this.left.heightHelper(),
+//                this.right.heightHelper());
+//		
+//		int balance = getBalance(this);
+//		this.checkBalance(balance,container);
 		return this;
 	}
 
@@ -150,7 +155,11 @@ public class Node {
 		else {
 			this.right.addHelper(ch, container);
 		}	
-		
+//		this.height = 1 + Math.max(this.left.heightHelper(),
+//                this.right.heightHelper());
+//		
+//		int balance = getBalance(this);
+//		this.checkBalance(balance, container);
 		
 	}
 	
@@ -199,6 +208,28 @@ public class Node {
 			return 0;
 		}
 		return node.left.heightHelper() - node.right.heightHelper();
+	}
+	public void checkBalance(int balance, Container container) {
+		if (balance > 1 && this.rank < this.left.rank)
+			container.rotationCount ++;
+            singleRightRotate(this);
+ 
+        // Right Right Case
+        if (balance < -1 && this.rank > this.right.rank)
+        	container.rotationCount ++;
+            singleLeftRotate(this);
+ 
+        // Left Right Case
+        if (balance > 1 && this.rank > this.left.rank) {
+        	container.rotationCount = container.rotationCount +2;
+            doubleLeftRotate(this);
+        }
+ 
+        // Right Left Case
+        if (balance < -1 && this.rank < this.right.rank) {
+        	container.rotationCount = container.rotationCount +2;
+            doubleRightRotate(this);
+        }
 	}
 	
 	
