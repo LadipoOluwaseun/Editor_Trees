@@ -2,6 +2,8 @@ package editortrees;
 
 import java.util.ArrayList;
 
+import editortrees.EditTree.Container;
+
 // A node in a height-balanced binary tree with rank.
 // Except for the NULL_NODE (if you choose to use one), one node cannot
 // belong to two different trees.
@@ -35,8 +37,8 @@ public class Node {
 	Code balance; 
 	int size;
 	int height;
+	Node parent;  
 	
-	// Node parent;  // You may want this field.
 	// Feel free to add other fields that you find useful
 	public static final Node NULL_NODE = new Node();
 
@@ -48,6 +50,7 @@ public class Node {
 		this.balance = Code.SAME;
 		this.size = 1;
 		this.height = 0;
+		this.parent = NULL_NODE;
 	}
 	// You will probably want to add several other methods
 
@@ -94,40 +97,75 @@ public class Node {
 		}
 		return list;
 	}
+	public ArrayList<String> inOrderDebug(ArrayList<String> list) {
+		String toAdd = new String();
+		toAdd += this.element;
+		toAdd += this.rank;
+		toAdd += this.balance;
+		list.add(toAdd);
+		if(left != NULL_NODE) {
+			left.inOrderDebug(list);
+		}
+		if(right != NULL_NODE) {
+			right.inOrderDebug(list);
+		}
+		return list;
+	}
 
-	public Node addHelper(char ch, int pos) throws IndexOutOfBoundsException {
+	public Node addHelper(char ch, int pos, Container container) throws IndexOutOfBoundsException {
 		if(this == NULL_NODE) {
 			Node newNode = new Node(ch);
 			return newNode;
 		}
+		//TODO: add second case for position 
 		if(pos < 0) {
 			throw new IndexOutOfBoundsException();
 		}
-//		Case of pos > root node
-//		Subtract pos - (root node pos + 1) add to this pos to the right
+
+		//add to right	
 		else if (pos > this.rank) {
-			this.right = this.right.addHelper(ch, (pos - rank - 1));
+			this.right = this.right.addHelper(ch, (pos - rank - 1), container);
 		}
+		//add to left
 		else if (pos <= this.rank ) {
-//			System.out.println(rank);
 			rank ++;
-			this.left = this.left.addHelper(ch, pos);
+			this.left = this.left.addHelper(ch, pos, container);
 		}
-		
-		
+		//call balance method 
+		//three cases left, right, and equal
 		return this;
-		
-//		Case of pos < root node
-		
-//		Comparing rank instead of value in node
 	}
 
-	public void addHelper(char ch) {
+	public void addHelper(char ch, Container container) {
 		if (this.right == NULL_NODE) {
 			this.right = new Node(ch);
+			if (this.left == NULL_NODE) {
+				this.balance = Code.RIGHT;
+				//rotate
+			}
+			else {
+				this.balance = Code.SAME;
+			}	
 		}
-		this.right.addHelper(ch);
-		// TODO Auto-generated method stub.
-		
+		else {
+			this.right.addHelper(ch, container);
+		}	
 	}
+	
+	public Node singleRightRotate(Node node) {
+		
+		return null;
+	}
+	
+	public Node singleLeftRotate(Node child, Node Parent) {
+		parent.right = child.left;
+		child.left = parent;
+		parent.balance = Code.SAME;
+		child.balance = Code.SAME;
+		parent.rank = parent.left.size;
+		child.rank = child.left.size;
+		return child;
+	}
+	
+	
 }

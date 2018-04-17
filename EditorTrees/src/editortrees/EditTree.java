@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public class EditTree {
 
 	private Node root;
+	public Container container = new Container();
+	
 	/**
 	 * MILESTONE 1
 	 * Construct an empty tree
@@ -58,7 +60,7 @@ public class EditTree {
 	 * @return number of rotations since this tree was created.
 	 */
 	public int totalRotationCount() {
-		return -1; // replace by a real calculation.
+		return container.rotationCount; // replace by a real calculation.
 	}
 
 	/**
@@ -78,7 +80,6 @@ public class EditTree {
 			    .replace(", ", "")
 			    .trim();
 		return formattedString; // replace by a real calculation.
-
 	}
 
 	/**
@@ -98,7 +99,12 @@ public class EditTree {
 	 *         a pre-order traversal of the tree.
 	 */
 	public String toDebugString() {
-		return null;
+		if(root == NULL_NODE) {
+			return "[]";
+		}
+		ArrayList<String> list = new ArrayList<String>();
+		root.inOrderDebug(list);
+		return list.toString(); // replace by a real calculation.
 	}
 
 	/**
@@ -120,7 +126,7 @@ public class EditTree {
 			this.root = new Node(ch);
 		}
 		else {
-			this.root.addHelper(ch);
+			this.root.addHelper(ch, container);
 		}
 		
 	}
@@ -135,8 +141,7 @@ public class EditTree {
 	 *            if pos is negative or too large for this tree
 	 */
 	public void add(char ch, int pos) throws IndexOutOfBoundsException {
-		
-		this.root = root.addHelper(ch, pos);
+		this.root = root.addHelper(ch, pos, container);
 	}
 
 	/**
@@ -291,5 +296,14 @@ public class EditTree {
 	 */
 	public Node getRoot() {
 		return this.root;
+	}
+	
+	public class Container {
+		int maxIndex;
+		int rotationCount;
+		public Container() {
+			maxIndex = 0;
+			rotationCount = 0;
+		}
 	}
 }
