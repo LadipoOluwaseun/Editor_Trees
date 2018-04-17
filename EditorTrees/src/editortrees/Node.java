@@ -207,7 +207,7 @@ public class Node {
 		if (node == NULL_NODE) {
 			return 0;
 		}
-		return node.left.heightHelper() - node.right.heightHelper();
+		return node.left.height- node.right.height;
 	}
 	public void checkBalance(int balance, Container container) {
 		if (balance > 1 && this.rank < this.left.rank)
