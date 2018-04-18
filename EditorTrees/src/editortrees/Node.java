@@ -114,6 +114,19 @@ public class Node {
 			this.balance = Code.RIGHT;
 		}
 	}
+	
+	public Node add(char ch, Container container) {
+		
+		if (this == NULL_NODE) {
+			return new Node(ch);
+		}
+		this.right = this.right.add(ch, container);
+		this.height = Math.max(this.left.height, this.right.height) + 1;
+		this.size++;
+		
+		this.setNodeBalance();
+		return this.checkForRotation(container);
+	}
 
 	/**
 	 * Adds a node character node at a certain position in the tree
@@ -148,19 +161,6 @@ public class Node {
 		}
 		
 		this.updateNode();
-		this.setNodeBalance();
-		return this.checkForRotation(container);
-	}
-
-	public Node add(char ch, Container container) {
-		
-		if (this == NULL_NODE) {
-			return new Node(ch);
-		}
-		this.right = this.right.add(ch, container);
-		this.height = Math.max(this.left.height, this.right.height) + 1;
-		this.size++;
-		
 		this.setNodeBalance();
 		return this.checkForRotation(container);
 	}

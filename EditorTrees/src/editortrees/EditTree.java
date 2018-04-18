@@ -159,9 +159,8 @@ public class EditTree {
 		if (this.root == Node.NULL_NODE) {
 			if (position != 0) {
 				throw new IndexOutOfBoundsException("Need to add adjacent to other elements");
-			} else {
-				this.root = new Node(ch);
-			}
+			} 
+			this.root = new Node(ch);
 			this.container.size++;
 		} else if (position < 0) {
 			throw new IndexOutOfBoundsException("Need an index greater than or equal to 0");
