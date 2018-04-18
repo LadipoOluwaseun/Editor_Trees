@@ -1,7 +1,10 @@
 package editortrees;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.util.Random;
 
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -1294,82 +1297,82 @@ public class EditTreeMilestone1Test {
 	// STRESS TESTS FOR ADD
 	// You may want to comment out these next few methods while developing to
 	// speed up your tests.
-//	private static final int NUM_NODES = 1000000;
-//	private static final int SKIP_INTERVAL = 10;
-//
-//	@Test
-//	public void testAddManyInc() {
-//		EditTree t = new EditTree();
-//		for (int k = 0; k < NUM_NODES; k++) {
-//			t.add((char) k);
-//		}
-//
-//		assertEquals(19, t.height());
-//		assertEquals(NUM_NODES, t.size());
-//		assertEquals(999980, t.totalRotationCount());
-//		m1points += m1weight;
-//	}
-//
-//	@Test
-//	public void testAddManyDec() {
-//		EditTree t = new EditTree();
-//		for (int k = NUM_NODES; k > 0; k--) {
-//			t.add((char) k);
-//		}
-//
-//		assertEquals(19, t.height());
-//		assertEquals(NUM_NODES, t.size());
-//		assertEquals(999980, t.totalRotationCount());
-//		m1points += m1weight;
-//	}
-//
-//	/**
-//	 * If a student should fail this test once, they might have reached the
-//	 * rotation count outside of the tested range. If a student should failed
-//	 * this test consistently - excessive rotations are being performed.
-//	 */
-//	@Test
-//	public void testAddManyRandom() {
-//
-//		EditTree t = new EditTree();
-//		Random random = new Random();
-//		for (int k = 0; k < NUM_NODES / SKIP_INTERVAL; k++) {
-//			for (int j = 0; j < 10; j++) {
-//				char toAdd = (char) ('0' + j);
-//				t.add(toAdd, random.nextInt(SKIP_INTERVAL * k + j + 1));
-//			}
-//		}
-//		assertEquals(NUM_NODES, t.size());
-//
-//		m1points += m1weight;
-//
-//		// System.out.println(t.totalRotationCount());
-//		int height = t.height();
-//		int maxH = (int) Math.ceil(1.44 * (Math.log(NUM_NODES) / Math.log(2)));
-//		int minH = (int) Math.floor(Math.log(NUM_NODES) / Math.log(2));
-//		boolean heightCheck = false;
-//		if (height >= minH && height <= maxH) {
-//			heightCheck = true;
-//		}
-//		assertTrue(heightCheck);
-//		m1points += m1weight;
-//
-//		// This range was created using several complete EditorTrees project
-//		// that returned similar results
-//		// It has a slight amount of built in padding, but even for the random
-//		// insertion values should still fit in this range.
-//		// Dr. B. found min of 696758, max of 700715 when running 150-200x.
-//		int maxR = 701000;
-//		int minR = 696500;
-//		int rot = t.totalRotationCount();
-//		boolean rotCheck = false;
-//		if (rot >= minR && rot <= maxR) {
-//			rotCheck = true;
-//		}
-//		assertTrue(rotCheck);
-//		m1points += m1weight;
-//	}
-//
+	private static final int NUM_NODES = 1000000;
+	private static final int SKIP_INTERVAL = 10;
+
+	@Test
+	public void testAddManyInc() {
+		EditTree t = new EditTree();
+		for (int k = 0; k < NUM_NODES; k++) {
+			t.add((char) k);
+		}
+
+		assertEquals(19, t.height());
+		assertEquals(NUM_NODES, t.size());
+		assertEquals(999980, t.totalRotationCount());
+		m1points += m1weight;
+	}
+
+	@Test
+	public void testAddManyDec() {
+		EditTree t = new EditTree();
+		for (int k = NUM_NODES; k > 0; k--) {
+			t.add((char) k);
+		}
+
+		assertEquals(19, t.height());
+		assertEquals(NUM_NODES, t.size());
+		assertEquals(999980, t.totalRotationCount());
+		m1points += m1weight;
+	}
+
+	/**
+	 * If a student should fail this test once, they might have reached the
+	 * rotation count outside of the tested range. If a student should failed
+	 * this test consistently - excessive rotations are being performed.
+	 */
+	@Test
+	public void testAddManyRandom() {
+
+		EditTree t = new EditTree();
+		Random random = new Random();
+		for (int k = 0; k < NUM_NODES / SKIP_INTERVAL; k++) {
+			for (int j = 0; j < 10; j++) {
+				char toAdd = (char) ('0' + j);
+				t.add(toAdd, random.nextInt(SKIP_INTERVAL * k + j + 1));
+			}
+		}
+		assertEquals(NUM_NODES, t.size());
+
+		m1points += m1weight;
+
+		// System.out.println(t.totalRotationCount());
+		int height = t.height();
+		int maxH = (int) Math.ceil(1.44 * (Math.log(NUM_NODES) / Math.log(2)));
+		int minH = (int) Math.floor(Math.log(NUM_NODES) / Math.log(2));
+		boolean heightCheck = false;
+		if (height >= minH && height <= maxH) {
+			heightCheck = true;
+		}
+		assertTrue(heightCheck);
+		m1points += m1weight;
+
+		// This range was created using several complete EditorTrees project
+		// that returned similar results
+		// It has a slight amount of built in padding, but even for the random
+		// insertion values should still fit in this range.
+		// Dr. B. found min of 696758, max of 700715 when running 150-200x.
+		int maxR = 701000;
+		int minR = 696500;
+		int rot = t.totalRotationCount();
+		boolean rotCheck = false;
+		if (rot >= minR && rot <= maxR) {
+			rotCheck = true;
+		}
+		assertTrue(rotCheck);
+		m1points += m1weight;
+	}
+
 	@AfterClass
 	public static void printSummary() {
 		System.out.print("\n ===============     ");
