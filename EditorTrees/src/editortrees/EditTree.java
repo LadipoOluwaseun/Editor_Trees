@@ -51,7 +51,9 @@ public class EditTree {
 	 * @param e
 	 */
 	public EditTree(EditTree e) {
-
+		if(e.root == NULL_NODE) {
+			root = NULL_NODE;
+		}
 	}
 
 	/**

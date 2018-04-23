@@ -312,17 +312,23 @@ public class Node {
 		}
 		return this;
 	}
-
+	public Node largestPosition() {
+		if(this.left == NULL_NODE && this.right == NULL_NODE) {
+			return this;
+		}
+		return this.right.largestPosition();
+	}
+	
 	public Node delete(int position, Container container) {
 //		When we find the actual Position
 		if (position == this.rank) {
 			container.charRemoved = this.element;
 //		4 cases 
 			if (this.left != NULL_NODE && this.right != NULL_NODE) {
-				return NULL_NODE;
+				return this.left.largestPosition();
 			}
 			else if (this.left == NULL_NODE && this.right == NULL_NODE) {
-				
+				return NULL_NODE;
 			}
 			else if (this.left != NULL_NODE) {
 				return this.left;
