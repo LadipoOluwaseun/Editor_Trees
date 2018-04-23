@@ -313,4 +313,39 @@ public class Node {
 		return this;
 	}
 
+	public Node delete(int position, Container container) {
+//		When we find the actual Position
+		if (position == this.rank) {
+			container.charRemoved = this.element;
+//		4 cases 
+			if (this.left != NULL_NODE && this.right != NULL_NODE) {
+				return NULL_NODE;
+			}
+			else if (this.left == NULL_NODE && this.right == NULL_NODE) {
+				
+			}
+			else if (this.left != NULL_NODE) {
+				return this.left;
+			}
+			else if (this.right != NULL_NODE) {
+				return this.right;
+			}
+		}
+//		Searching left
+		else if (position < this.rank) {
+			
+			this.left = this.left.delete(position, container);
+			this.rank--;
+		} 
+//		Searching right
+		else {
+			
+			this.right = this.right.delete(position - (this.rank + 1), container);
+		}
+		
+		this.updateNode();
+		this.setNodeBalance();
+		return this.checkForRotation(container);
+	}
+
 }

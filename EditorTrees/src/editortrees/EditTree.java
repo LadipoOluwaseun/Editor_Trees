@@ -15,7 +15,8 @@ public class EditTree {
 		int maxIndex;
 		int size;
 		int rotationCount;
-
+		char charRemoved;
+		
 		public Container() {
 			maxIndex = 0;
 			size = 0;
@@ -218,7 +219,11 @@ public class EditTree {
 		// node to be deleted with either its in-order successor or predecessor.
 		// The tests assume assume that you will replace it with the
 		// *successor*.
-		return '#'; // replace by a real calculation.
+		
+		this.root.delete(pos, this.container);
+//		Passed container stores the char of the node being deleted
+		
+		return this.container.charRemoved; // replace by a real calculation.
 	}
 
 	/**
@@ -284,13 +289,7 @@ public class EditTree {
 	 *             tree.
 	 */
 	public EditTree delete(int start, int length) throws IndexOutOfBoundsException {
-		if (start < 0 || start + length >= this.size())
-			throw new IndexOutOfBoundsException(
-					(start < 0) ? "negative first argument to delete" : "delete range extends past end of string");
-		EditTree t2 = this.split(start);
-		EditTree t3 = t2.split(length);
-		this.concatenate(t3);
-		return t2;
+		return null;
 	}
 
 	/**
