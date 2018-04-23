@@ -54,6 +54,7 @@ public class EditTree {
 		if(e.root == NULL_NODE) {
 			root = NULL_NODE;
 		}
+		
 	}
 
 	/**
