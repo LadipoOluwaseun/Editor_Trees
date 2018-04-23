@@ -312,33 +312,37 @@ public class Node {
 		}
 		return this;
 	}
-	public Node largestPosition() {
-		if(this.left == NULL_NODE && this.right == NULL_NODE) {
+	
+	public Node largestLeftSubtree() {
+		if(this.left == NULL_NODE) {
 			return this;
 		}
-		return this.right.largestPosition();
+		return this.left.largestLeftSubtree();
 	}
 	
+	
 	public Node delete(int position, Container container) {
+		if(position < 0 || position >= this.size) {
+			throw new IndexOutOfBoundsException("Out of bounds");
+		}
 //		When we find the actual Position
 		if (position == this.rank) {
 			container.charRemoved = this.element;
 //		4 cases 
 			if (this.left != NULL_NODE && this.right != NULL_NODE) {
-				return this.left.largestPosition();
+				Node toReturn = this.right.largestLeftSubtree(); 
+				container.charRemoved = this.element;
+				this.right = this.right.delete(0, container);
+				this.element = toReturn.element;
 			}
 			else if (this.left == NULL_NODE && this.right == NULL_NODE) {
 				return NULL_NODE;
 			}
 			else if (this.left != NULL_NODE) {
-				Node toReturn = this.left;
-				this.left = NULL_NODE;
-				return toReturn;
+				return this.left;
 			}
 			else if (this.right != NULL_NODE) {
-				Node toReturn = this.right;
-				this.right = NULL_NODE;
-				return toReturn;			}
+				return this.right;			}
 		}
 //		Searching left
 		else if (position < this.rank) {

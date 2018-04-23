@@ -221,10 +221,12 @@ public class EditTree {
 		// node to be deleted with either its in-order successor or predecessor.
 		// The tests assume assume that you will replace it with the
 		// *successor*.
-		
+		if(this.root == NULL_NODE) {
+			throw new IndexOutOfBoundsException("Empty tree");
+		}
 		this.root = this.root.delete(pos, this.container);
 //		Passed container stores the char of the node being deleted
-		
+		container.size--;
 		return this.container.charRemoved; // replace by a real calculation.
 	}
 
