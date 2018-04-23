@@ -51,9 +51,8 @@ public class EditTree {
 	 * @param e
 	 */
 	public EditTree(EditTree e) {
-		if(e.root == NULL_NODE) {
-			root = NULL_NODE;
-		}
+		Node newRoot = new Node(e.root.element);
+		this.root = newRoot.createTreeCopy(e.root,e,container);
 		
 	}
 
@@ -66,7 +65,7 @@ public class EditTree {
 	 * @param s
 	 */
 	public EditTree(String s) {
-
+		
 	}
 
 	/**
@@ -222,6 +221,7 @@ public class EditTree {
 		// node to be deleted with either its in-order successor or predecessor.
 		// The tests assume assume that you will replace it with the
 		// *successor*.
+
 		if(this.root == NULL_NODE) {
 			throw new IndexOutOfBoundsException("Empty tree");
 		}

@@ -334,6 +334,7 @@ public class Node {
 				container.charRemoved = this.element;
 				this.right = this.right.delete(0, container);
 				this.element = toReturn.element;
+
 			}
 			else if (this.left == NULL_NODE && this.right == NULL_NODE) {
 				return NULL_NODE;
@@ -351,7 +352,7 @@ public class Node {
 			this.rank--;
 		} 
 //		Searching right
-		else {
+		else if (position > this.rank) {
 			
 			this.right = this.right.delete(position - (this.rank + 1), container);
 		}
@@ -359,6 +360,26 @@ public class Node {
 		this.updateNode();
 		this.setNodeBalance();
 		return this.checkForRotation(container);
+	}
+
+	public Node createTreeCopy(Node oldTreeNode, EditTree e, Container container) {
+		
+		if (oldTreeNode == NULL_NODE) {
+			return NULL_NODE;
+		}
+		container.size = e.container.size;
+		this.balance = oldTreeNode.balance;
+		this.element = oldTreeNode.element;
+		this.height = oldTreeNode.height;
+		this.rank = oldTreeNode.rank;
+		this.size = oldTreeNode.size;
+//		Creates news nodes with the information copied over
+		this.left = new Node(oldTreeNode.left.element);
+		this.right = new Node(oldTreeNode.right.element);
+//		Recursive calls
+		this.left = this.left.createTreeCopy(oldTreeNode.left, e, container);
+		this.right = this.right.createTreeCopy(oldTreeNode.right, e, container);
+		return this;
 	}
 
 }
