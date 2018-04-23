@@ -39,6 +39,7 @@ public class Node {
 	Node left, right, parent;
 	int rank, size;
 	Code balance;
+	
 	public static final Node NULL_NODE = new Node();
 
 	public Node(Character data) {
