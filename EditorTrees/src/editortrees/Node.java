@@ -313,11 +313,11 @@ public class Node {
 		return this;
 	}
 	
-	public Node largestLeftSubtree() {
+	public Node nodeSucessor() {
 		if(this.left == NULL_NODE) {
 			return this;
 		}
-		return this.left.largestLeftSubtree();
+		return this.left.nodeSucessor();
 	}
 	
 	
@@ -330,7 +330,7 @@ public class Node {
 			container.charRemoved = this.element;
 //		4 cases 
 			if (this.left != NULL_NODE && this.right != NULL_NODE) {
-				Node toReturn = this.right.largestLeftSubtree(); 
+				Node toReturn = this.right.nodeSucessor(); 
 				container.charRemoved = this.element;
 				this.right = this.right.delete(0, container);
 				this.element = toReturn.element;
