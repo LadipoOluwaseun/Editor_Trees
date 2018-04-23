@@ -331,11 +331,14 @@ public class Node {
 				return NULL_NODE;
 			}
 			else if (this.left != NULL_NODE) {
-				return this.left;
+				Node toReturn = this.left;
+				this.left = NULL_NODE;
+				return toReturn;
 			}
 			else if (this.right != NULL_NODE) {
-				return this.right;
-			}
+				Node toReturn = this.right;
+				this.right = NULL_NODE;
+				return toReturn;			}
 		}
 //		Searching left
 		else if (position < this.rank) {

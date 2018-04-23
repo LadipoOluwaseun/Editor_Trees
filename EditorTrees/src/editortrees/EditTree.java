@@ -222,7 +222,7 @@ public class EditTree {
 		// The tests assume assume that you will replace it with the
 		// *successor*.
 		
-		this.root.delete(pos, this.container);
+		this.root = this.root.delete(pos, this.container);
 //		Passed container stores the char of the node being deleted
 		
 		return this.container.charRemoved; // replace by a real calculation.
