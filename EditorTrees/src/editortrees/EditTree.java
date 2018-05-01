@@ -65,15 +65,13 @@ public class EditTree {
 	 * @param s
 	 */
 	public EditTree(String s) {
-		if(s == "") {
-			root =  NULL_NODE;
+
+		if (s.length() == 0) {
+			this.root = NULL_NODE;
 		}
-		int length = s.length();
-		int rootCharIndex = (int)Math.floor((double)(length/2));
-		char rootChar = s.charAt(rootCharIndex);
-		root = new Node(rootChar);
-		root.EditTree(s);
-		
+		this.root = new Node();
+		this.root = this.root.EditTree(s);
+
 	}
 
 	/**
@@ -253,17 +251,8 @@ public class EditTree {
 	 *             within this tree.
 	 */
 	public String get(int pos, int length) throws IndexOutOfBoundsException {
-		if(pos < 0 || pos + length - 1 >= this.size()) {
-			throw new IndexOutOfBoundsException();
-		}
-		StringBuilder string = new StringBuilder();
-		for(int i = 0; i < length ; i++) {
-			char toAdd = root.get(pos + i);
-			string.append(toAdd);
-		}
-		return string.toString();
+		return "";
 	}
-
 
 	/**
 	 * MILESTONE 3, MEDIUM - SEE THE PAPER REFERENCED IN THE SPEC FOR ALGORITHM!
@@ -334,13 +323,7 @@ public class EditTree {
 	 *             tree.
 	 */
 	public EditTree delete(int start, int length) throws IndexOutOfBoundsException {
-		if (start < 0 || start + length >= this.size())
-			throw new IndexOutOfBoundsException(
-					(start < 0) ? "negative first argument to delete" : "delete range extends past end of string");
-		EditTree t2 = this.split(start);
-		EditTree t3 = t2.split(length);
-		this.concatenate(t3);
-		return t2;
+		return null;
 	}
 
 	/**

@@ -440,12 +440,14 @@ public class Node {
 			return NULL_NODE;
 		}
 		int rootCharIndex = (int)Math.floor((double)(string.length()/2));
-//		this = new Node(string.substring(rootCharIndex, rootCharIndex + 1);
-		this.left.EditTree(string.substring(0, rootCharIndex));
-		this.right.EditTree(string.substring(rootCharIndex + 1,string.length()));
+		this.element = string.charAt(rootCharIndex);
+		this.left = new Node();
+		this.left = this.left.EditTree(string.substring(0, rootCharIndex));
+		this.right = new Node();
+		this.right = this.right.EditTree(string.substring(rootCharIndex + 1,string.length()));
+		this.updateNode();
 		
-		
-		return NULL_NODE;
+		return this;
 	}
 
 	
