@@ -188,6 +188,9 @@ public class EditTree {
 	 * @throws IndexOutOfBoundsException
 	 */
 	public char get(int position) throws IndexOutOfBoundsException {
+		if (position < 0 || position >= this.size()) {
+			throw new IndexOutOfBoundsException("Out of bounds");
+		}
 		if (root == NULL_NODE) {
 			throw new IndexOutOfBoundsException("Empty tree");
 		}
@@ -251,7 +254,15 @@ public class EditTree {
 	 *             within this tree.
 	 */
 	public String get(int pos, int length) throws IndexOutOfBoundsException {
-		return "";
+		if (pos < 0 || pos + length > this.size()) {
+			throw new IndexOutOfBoundsException("Out of bounds");
+		}
+		StringBuilder string = new StringBuilder();
+		for (int i = 0; i < length; i++) {
+			string.append(this.root.get(pos + i));
+		}
+
+		return string.toString();
 	}
 
 	/**
@@ -335,7 +346,20 @@ public class EditTree {
 	 *         does not occur
 	 */
 	public int find(String s) {
-		return -2;
+		if (this.root == NULL_NODE) {
+			return -1;
+		}
+		if (s.length() == 0) {
+			return 0;
+		}
+		String string = this.toString();							
+		for (int i = 0; i <= string.length() - s.length(); i++) {
+			if (string.substring(i, s.length() + i).equals(s)) {
+				return i;
+			}
+		}
+		return -1;
+
 	}
 
 	/**
@@ -349,7 +373,25 @@ public class EditTree {
 	 *         not occur before position pos; -1 if s does not occur
 	 */
 	public int find(String s, int pos) {
-		return -2;
+		
+		ArrayList<Character> list = new ArrayList<Character>();
+		this.root.inOrder(list);
+		
+		int startIndex = 0;
+		int stringIndex = 0;
+		for (int i = pos; i < list.size(); i++) {
+			if (list.get(i) == s.charAt(stringIndex)) {
+				if (stringIndex == 0) {
+					startIndex = i;
+				}
+				stringIndex ++;
+				if (stringIndex + 1 >= s.length()) {
+					return startIndex;
+				}
+			}
+			
+		}
+		return -1;
 	}
 
 	/**
