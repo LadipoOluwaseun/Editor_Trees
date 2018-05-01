@@ -31,6 +31,7 @@ public class Node {
 	}
 
 	enum RotationCode {
+
 		LEFT, RIGHT, DOUBLE_RIGHT, DOUBLE_LEFT;
 	}
 
@@ -41,13 +42,13 @@ public class Node {
 	Code balance;
 
 	public static final Node NULL_NODE = new Node();
-	
+
 	/**
 	 * Creates a new node with the given character passed as a parameter
 	 * 
-	 * @param	data
-	 *	
-	 * @return	none
+	 * @param data
+	 * 
+	 * @return none
 	 */
 	public Node(Character data) {
 		// Basic Node data
@@ -65,9 +66,9 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	
-	 *	
-	 * @return	
+	 * @param
+	 * 
+	 * @return
 	 */
 	public Node() {
 
@@ -81,9 +82,9 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	
-	 *	
-	 * @return	int
+	 * @param
+	 * 
+	 * @return int
 	 */
 	public int height() {
 
@@ -93,9 +94,9 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	
-	 *	
-	 * @return	int
+	 * @param
+	 * 
+	 * @return int
 	 */
 	public int size() {
 
@@ -108,9 +109,9 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	list
-	 *	
-	 * @return	ArrayList<Character>
+	 * @param list
+	 * 
+	 * @return ArrayList<Character>
 	 */
 	public ArrayList<Character> inOrder(ArrayList<Character> list) {
 
@@ -127,9 +128,9 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	list
-	 *	
-	 * @return	ArrayList<String>
+	 * @param list
+	 * 
+	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> inOrderDebug(ArrayList<String> list) {
 
@@ -150,9 +151,9 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	
-	 *	
-	 * @return	
+	 * @param
+	 * 
+	 * @return
 	 */
 	public void setNodeBalance() {
 
@@ -168,9 +169,10 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	ch, container
-	 *	
-	 * @return	Node
+	 * @param ch,
+	 *            container
+	 * 
+	 * @return Node
 	 */
 	public Node add(char ch, Container container) {
 
@@ -188,8 +190,9 @@ public class Node {
 	/**
 	 * Adds a node character node at a certain position in the tree
 	 * 
-	 * @param	ch, position, container
-	 *	
+	 * @param ch,
+	 *            position, container
+	 * 
 	 * @return Node
 	 */
 	public Node add(char ch, int position, Container container) {
@@ -222,13 +225,13 @@ public class Node {
 		this.setNodeBalance();
 		return this.checkForRotation(container);
 	}
-	
+
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	position
-	 *	
-	 * @return	char
+	 * @param position
+	 * 
+	 * @return char
 	 */
 	public char get(int position) throws IndexOutOfBoundsException {
 
@@ -247,19 +250,21 @@ public class Node {
 		}
 		return this.element;
 	}
-	
+
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	node, container
-	 *	
-	 * @return	
+	 * @param node,
+	 *            container
+	 * 
+	 * @return
 	 */
 	public Node rotateSingleLeft(Node node, Container container) {
 
 		node = this.right;
 		this.right = this.right.left;
 		node.left = this;
+		
 		node.updateNodeFields();
 		container.rotationCount++;
 		return node;
@@ -268,15 +273,17 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	node, container
-	 *	
-	 * @return	
+	 * @param node,
+	 *            container
+	 * 
+	 * @return
 	 */
 	public Node rotateSingleRight(Node node, Container container) {
 
 		node = this.left;
 		this.left = this.left.right;
 		node.right = this;
+		
 		node.updateNodeFields();
 		container.rotationCount++;
 		return node;
@@ -285,9 +292,10 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	node, container
-	 *	
-	 * @return	Node
+	 * @param node,
+	 *            container
+	 * 
+	 * @return Node
 	 */
 	public Node rotateDoubleRight(Node node, Container container) {
 
@@ -299,6 +307,7 @@ public class Node {
 		node.left = this.left;
 		this.left = temp2;
 		node.right = this;
+		
 		node.updateNodeFields();
 		container.rotationCount += 2;
 		return node;
@@ -307,9 +316,10 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param node, container
-	 *	
-	 * @return	Node
+	 * @param node,
+	 *            container
+	 * 
+	 * @return Node
 	 */
 	public Node rotateDoubleLeft(Node node, Container container) {
 
@@ -321,6 +331,7 @@ public class Node {
 		node.right = this.right;
 		this.right = temp2;
 		node.left = this;
+		
 		node.updateNodeFields();
 		container.rotationCount += 2;
 		return node;
@@ -329,9 +340,10 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param rotateEnum, container
-	 *	
-	 * @return	Node
+	 * @param rotateEnum,
+	 *            container
+	 * 
+	 * @return Node
 	 */
 	public Node rotate(RotationCode rotateEnum, Container container) {
 
@@ -352,9 +364,9 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	
-	 *	
-	 * @return	
+	 * @param
+	 * 
+	 * @return
 	 */
 	public void updateNode() {
 
@@ -367,9 +379,9 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	
-	 *	
-	 * @return	int
+	 * @param
+	 * 
+	 * @return int
 	 */
 	public int updateHeight() {
 
@@ -382,9 +394,9 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	
-	 *	
-	 * @return	int
+	 * @param
+	 * 
+	 * @return int
 	 */
 	public int updateSize() {
 
@@ -392,13 +404,13 @@ public class Node {
 		this.right.size = this.right.right.size + this.right.left.size + 1;
 		return this.right.size + this.left.size + 1;
 	}
-	
+
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	
-	 *	
-	 * @return	int
+	 * @param
+	 * 
+	 * @return int
 	 */
 	public int updateRank() {
 
@@ -410,9 +422,9 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	
-	 *	
-	 * @return	
+	 * @param
+	 * 
+	 * @return
 	 */
 	public void updateNodeFields() {
 
@@ -429,8 +441,8 @@ public class Node {
 	 * NEEDS DESCRIPTION
 	 * 
 	 * @param container
-	 *	
-	 * @return	Node
+	 * 
+	 * @return Node
 	 */
 	public Node checkForRotation(Container container) {
 
@@ -457,26 +469,29 @@ public class Node {
 
 	/**
 	 * NEEDS DESCRIPTION
-	 * @param	
-	 *	
-	 * @return	Node
+	 * 
+	 * @param
+	 * 
+	 * @return Node
 	 */
 	public Node nodeSucessor() {
-		
+
 		if (this.left == NULL_NODE) {
 			return this;
 		}
 		return this.left.nodeSucessor();
 	}
-	
+
 	/**
 	 * NEEDS DESCRIPTION
-	 * @param position, container
-	 *	
-	 * @return	Node
+	 * 
+	 * @param position,
+	 *            container
+	 * 
+	 * @return Node
 	 */
 	public Node delete(int position, Container container) {
-		
+
 		if (position < 0 || position >= this.size) {
 			throw new IndexOutOfBoundsException("Out of bounds");
 		}
@@ -515,9 +530,10 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param oldTreeNode, e, container	
-	 *	
-	 * @return Node	
+	 * @param oldTreeNode,
+	 *            e, container
+	 * 
+	 * @return Node
 	 */
 	public Node createTreeCopy(Node oldTreeNode, EditTree e, Container container) {
 
@@ -542,18 +558,19 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param leftTree, rightTree, connectingNode, checkParent, checkNode, pHeight
-	 * container
-	 *	
-	 * @return	Node
+	 * @param leftTree,
+	 *            rightTree, connectingNode, checkParent, checkNode, pHeight
+	 *            container
+	 * 
+	 * @return Node
 	 */
-	public Node concatenate(EditTree leftTree, EditTree rightTree, Node connectingNode,
-			Node checkParent, Node checkNode, int checkNodeHeight, Container container) {
+	public Node concatenate(EditTree leftTree, EditTree rightTree, Node connectingNode, Node checkParent,
+			Node checkNode, int checkNodeHeight, Container container) {
 		// Determining the heights of both left and right trees
 		int heightOfLeftTree = leftTree.height();
 		int heightOfRightTree = rightTree.height();
 
-// 		Height of leftTree is greater than or equal height of rightTree
+		// Height of leftTree is greater than or equal height of rightTree
 		if (heightOfLeftTree >= heightOfRightTree) {
 			if ((checkNodeHeight - heightOfRightTree) > 1) {
 				if (checkNode.balance.equals(Code.LEFT)) {
@@ -562,8 +579,8 @@ public class Node {
 					checkNodeHeight = checkNodeHeight - 1;
 				}
 				checkParent = checkNode;
-				checkNode.right = concatenate(leftTree, rightTree, connectingNode,
-						checkParent, checkNode.right, checkNodeHeight, container);
+				checkNode.right = concatenate(leftTree, rightTree, connectingNode, checkParent, checkNode.right,
+						checkNodeHeight, container);
 				checkNode.updateNode();
 				checkNode.setNodeBalance();
 				return checkNode.checkForRotation(container);
@@ -577,7 +594,7 @@ public class Node {
 			}
 			return connectingNode.checkForRotation(container);
 		}
-// 		Height of leftTree is less than height of rightTree
+		// Height of leftTree is less than height of rightTree
 		else if (heightOfLeftTree < heightOfRightTree) {
 			if (checkNodeHeight - heightOfRightTree > 1) {
 				if (checkNode.balance.equals(Code.RIGHT)) {
@@ -586,8 +603,8 @@ public class Node {
 					checkNodeHeight = checkNodeHeight - 1;
 				}
 				checkParent = checkNode;
-				checkNode.left = concatenate(leftTree, rightTree, connectingNode,
-						checkParent, checkNode.left, checkNodeHeight, container);
+				checkNode.left = concatenate(leftTree, rightTree, connectingNode, checkParent, checkNode.left,
+						checkNodeHeight, container);
 				checkNode.updateNode();
 				checkNode.setNodeBalance();
 				return checkNode.checkForRotation(container);
@@ -607,9 +624,9 @@ public class Node {
 	/**
 	 * NEEDS DESCRIPTION
 	 * 
-	 * @param	string
-	 *	
-	 * @return   Node
+	 * @param string
+	 * 
+	 * @return Node
 	 */
 	public Node EditTree(String string) {
 		if (string.length() == 0) {
