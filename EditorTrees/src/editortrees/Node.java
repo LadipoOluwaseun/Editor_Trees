@@ -435,6 +435,19 @@ public class Node {
 		return p;
 	}
 
+	public Node EditTree(String string) {
+		if(string.length() == 0) {
+			return NULL_NODE;
+		}
+		int rootCharIndex = (int)Math.floor((double)(string.length()/2));
+//		this = new Node(string.substring(rootCharIndex, rootCharIndex + 1);
+		this.left.EditTree(string.substring(0, rootCharIndex));
+		this.right.EditTree(string.substring(rootCharIndex + 1,string.length()));
+		
+		
+		return NULL_NODE;
+	}
+
 	
 
 }

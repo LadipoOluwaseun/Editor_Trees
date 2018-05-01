@@ -65,7 +65,15 @@ public class EditTree {
 	 * @param s
 	 */
 	public EditTree(String s) {
-
+		if(s == "") {
+			root =  NULL_NODE;
+		}
+		int length = s.length();
+		int rootCharIndex = (int)Math.floor((double)(length/2));
+		char rootChar = s.charAt(rootCharIndex);
+		root = new Node(rootChar);
+		root.EditTree(s);
+		
 	}
 
 	/**
@@ -326,7 +334,13 @@ public class EditTree {
 	 *             tree.
 	 */
 	public EditTree delete(int start, int length) throws IndexOutOfBoundsException {
-		return null;
+		if (start < 0 || start + length >= this.size())
+			throw new IndexOutOfBoundsException(
+					(start < 0) ? "negative first argument to delete" : "delete range extends past end of string");
+		EditTree t2 = this.split(start);
+		EditTree t3 = t2.split(length);
+		this.concatenate(t3);
+		return t2;
 	}
 
 	/**
