@@ -245,8 +245,17 @@ public class EditTree {
 	 *             within this tree.
 	 */
 	public String get(int pos, int length) throws IndexOutOfBoundsException {
-		return "";
+		if(pos < 0 || pos + length - 1 >= this.size()) {
+			throw new IndexOutOfBoundsException();
+		}
+		StringBuilder string = new StringBuilder();
+		for(int i = 0; i < length ; i++) {
+			char toAdd = root.get(pos + i);
+			string.append(toAdd);
+		}
+		return string.toString();
 	}
+
 
 	/**
 	 * MILESTONE 3, MEDIUM - SEE THE PAPER REFERENCED IN THE SPEC FOR ALGORITHM!
