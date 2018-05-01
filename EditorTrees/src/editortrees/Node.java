@@ -395,7 +395,7 @@ public class Node {
 					pHeight = pHeight - 1;
 				}
 				parent = p;
-				p.right = concatenate(leftTree, rightTree, connectingNode, parent, p, pHeight, container);
+				p.right = concatenate(leftTree, rightTree, connectingNode, parent, p.right, pHeight, container);
 				p.updateNode();
 				p.setNodeBalance();
 				return p.checkForRotation(container);
@@ -418,7 +418,7 @@ public class Node {
 					pHeight = pHeight - 1;
 				}
 				parent = p;
-				p.left = concatenate(leftTree, rightTree, connectingNode, parent, p, pHeight, container);
+				p.left = concatenate(leftTree, rightTree, connectingNode, parent, p.left, pHeight, container);
 				p.updateNode();
 				p.setNodeBalance();
 				return p.checkForRotation(container);
@@ -448,6 +448,29 @@ public class Node {
 		this.updateNode();
 		
 		return this;
+	}
+
+	public int find(String s, int startIndex, int currentIndex, int count) {
+		ArrayList<Character> list = new ArrayList();
+		this.inOrder(list);
+		if (left != NULL_NODE) {
+			left.find(s,startIndex,currentIndex,count);
+		}
+		count++;
+		if (s.charAt(currentIndex) == this.element) {
+			
+			currentIndex ++;
+			if (currentIndex + 1 >= s.length()) {
+				return startIndex;
+			}
+		}
+		else {
+			currentIndex = 0;
+		}
+		if (right != NULL_NODE) {
+			right.find(s,startIndex, currentIndex,count);
+		}
+		return -1;
 	}
 
 	

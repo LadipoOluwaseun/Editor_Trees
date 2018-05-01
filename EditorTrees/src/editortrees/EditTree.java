@@ -18,6 +18,7 @@ public class EditTree {
 		char charRemoved;
 
 		public Container() {
+			
 			maxIndex = 0;
 			size = 0;
 			rotationCount = 0;
@@ -51,6 +52,7 @@ public class EditTree {
 	 * @param e
 	 */
 	public EditTree(EditTree e) {
+		
 		Node newRoot = new Node(e.root.element);
 		this.root = newRoot.createTreeCopy(e.root, e, container);
 
@@ -188,6 +190,7 @@ public class EditTree {
 	 * @throws IndexOutOfBoundsException
 	 */
 	public char get(int position) throws IndexOutOfBoundsException {
+
 		if (position < 0 || position >= this.size()) {
 			throw new IndexOutOfBoundsException("Out of bounds");
 		}
@@ -203,6 +206,7 @@ public class EditTree {
 	 * @return the height of this tree
 	 */
 	public int height() {
+
 		return root.height(); // replace by a real calculation.
 	}
 
@@ -213,6 +217,7 @@ public class EditTree {
 	 *         you have one.
 	 */
 	public int size() {
+
 		return this.root.size; // replace by a real calculation.
 	}
 
@@ -254,6 +259,7 @@ public class EditTree {
 	 *             within this tree.
 	 */
 	public String get(int pos, int length) throws IndexOutOfBoundsException {
+
 		if (pos < 0 || pos + length > this.size()) {
 			throw new IndexOutOfBoundsException("Out of bounds");
 		}
@@ -276,15 +282,16 @@ public class EditTree {
 	 *             if this == other
 	 */
 	public void concatenate(EditTree rightTree) throws IllegalArgumentException {
-		if (rightTree.size() == 0) {
-			rightTree.root = NULL_NODE;
-			return;
+
+		if (this == rightTree) {
+			throw new IllegalArgumentException("Cannot be same tree");
 		} else if (this.size() == 0) {
 			this.root = rightTree.root;
 			rightTree.root = NULL_NODE;
 			return;
-		} else if (this == rightTree) {
-			throw new IllegalArgumentException("Cannot be same tree");
+		} else if (rightTree.size() == 0) {
+			rightTree.root = NULL_NODE;
+			return;
 		} else {
 			// Case of left tree smaller than right tree
 			if (this.height() < rightTree.height()) {
@@ -314,6 +321,7 @@ public class EditTree {
 	 * @throws IndexOutOfBoundsException
 	 */
 	public EditTree split(int pos) throws IndexOutOfBoundsException {
+
 		return null; // replace by a real calculation.
 	}
 
@@ -334,6 +342,7 @@ public class EditTree {
 	 *             tree.
 	 */
 	public EditTree delete(int start, int length) throws IndexOutOfBoundsException {
+
 		return null;
 	}
 
@@ -346,13 +355,14 @@ public class EditTree {
 	 *         does not occur
 	 */
 	public int find(String s) {
+
 		if (this.root == NULL_NODE) {
 			return -1;
 		}
 		if (s.length() == 0) {
 			return 0;
 		}
-		String string = this.toString();							
+		String string = this.toString();
 		for (int i = 0; i <= string.length() - s.length(); i++) {
 			if (string.substring(i, s.length() + i).equals(s)) {
 				return i;
@@ -373,10 +383,10 @@ public class EditTree {
 	 *         not occur before position pos; -1 if s does not occur
 	 */
 	public int find(String s, int pos) {
-		
+
 		ArrayList<Character> list = new ArrayList<Character>();
 		this.root.inOrder(list);
-		
+
 		int startIndex = 0;
 		int stringIndex = 0;
 		for (int i = pos; i < list.size(); i++) {
@@ -384,12 +394,11 @@ public class EditTree {
 				if (stringIndex == 0) {
 					startIndex = i;
 				}
-				stringIndex ++;
+				stringIndex++;
 				if (stringIndex + 1 >= s.length()) {
 					return startIndex;
 				}
 			}
-			
 		}
 		return -1;
 	}

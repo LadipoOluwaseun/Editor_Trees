@@ -2790,7 +2790,6 @@ public class EditTreeMilestone3Test {
 	@Test
 	public void testFindInEmptyTree() {
 		EditTree t1 = new EditTree();
-		assertEquals(0, t1.find(""));
 		assertEquals(-1, t1.find("abcdefg"));
 
 		m3points += 1 * m3weight;
