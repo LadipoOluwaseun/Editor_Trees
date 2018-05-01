@@ -41,7 +41,14 @@ public class Node {
 	Code balance;
 
 	public static final Node NULL_NODE = new Node();
-
+	
+	/**
+	 * Creates a new node with the given character passed as a parameter
+	 * 
+	 * @param	data
+	 *	
+	 * @return	none
+	 */
 	public Node(Character data) {
 		// Basic Node data
 		this.element = data;
@@ -55,6 +62,13 @@ public class Node {
 		this.height = 0;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	
+	 *	
+	 * @return	
+	 */
 	public Node() {
 
 		this.left = null;
@@ -64,11 +78,25 @@ public class Node {
 
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	
+	 *	
+	 * @return	int
+	 */
 	public int height() {
 
 		return this.height;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	
+	 *	
+	 * @return	int
+	 */
 	public int size() {
 
 		if (this == NULL_NODE) {
@@ -77,6 +105,13 @@ public class Node {
 		return this.right.size() + this.rank + 1;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	list
+	 *	
+	 * @return	ArrayList<Character>
+	 */
 	public ArrayList<Character> inOrder(ArrayList<Character> list) {
 
 		if (left != NULL_NODE) {
@@ -89,6 +124,13 @@ public class Node {
 		return list;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	list
+	 *	
+	 * @return	ArrayList<String>
+	 */
 	public ArrayList<String> inOrderDebug(ArrayList<String> list) {
 
 		String toAdd = new String();
@@ -105,6 +147,13 @@ public class Node {
 		return list;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	
+	 *	
+	 * @return	
+	 */
 	public void setNodeBalance() {
 
 		if (right.height - left.height == -1) {
@@ -116,6 +165,13 @@ public class Node {
 		}
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	ch, container
+	 *	
+	 * @return	Node
+	 */
 	public Node add(char ch, Container container) {
 
 		if (this == NULL_NODE) {
@@ -132,7 +188,8 @@ public class Node {
 	/**
 	 * Adds a node character node at a certain position in the tree
 	 * 
-	 *
+	 * @param	ch, position, container
+	 *	
 	 * @return Node
 	 */
 	public Node add(char ch, int position, Container container) {
@@ -165,7 +222,14 @@ public class Node {
 		this.setNodeBalance();
 		return this.checkForRotation(container);
 	}
-
+	
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	position
+	 *	
+	 * @return	char
+	 */
 	public char get(int position) throws IndexOutOfBoundsException {
 
 		if (position < this.rank) {
@@ -183,7 +247,14 @@ public class Node {
 		}
 		return this.element;
 	}
-
+	
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	node, container
+	 *	
+	 * @return	
+	 */
 	public Node rotateSingleLeft(Node node, Container container) {
 
 		node = this.right;
@@ -194,6 +265,13 @@ public class Node {
 		return node;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	node, container
+	 *	
+	 * @return	
+	 */
 	public Node rotateSingleRight(Node node, Container container) {
 
 		node = this.left;
@@ -204,6 +282,13 @@ public class Node {
 		return node;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	node, container
+	 *	
+	 * @return	Node
+	 */
 	public Node rotateDoubleRight(Node node, Container container) {
 
 		node = this.left.right;
@@ -219,6 +304,13 @@ public class Node {
 		return node;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param node, container
+	 *	
+	 * @return	Node
+	 */
 	public Node rotateDoubleLeft(Node node, Container container) {
 
 		node = this.right.left;
@@ -234,6 +326,13 @@ public class Node {
 		return node;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param rotateEnum, container
+	 *	
+	 * @return	Node
+	 */
 	public Node rotate(RotationCode rotateEnum, Container container) {
 
 		Node tempNode = this;
@@ -250,6 +349,13 @@ public class Node {
 		return tempNode;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	
+	 *	
+	 * @return	
+	 */
 	public void updateNode() {
 
 		this.height = Math.max(this.left.height, this.right.height) + 1;
@@ -258,6 +364,13 @@ public class Node {
 		this.setNodeBalance();
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	
+	 *	
+	 * @return	int
+	 */
 	public int updateHeight() {
 
 		this.right.height = 1 + Math.max(this.right.right.height, this.right.left.height);
@@ -266,13 +379,27 @@ public class Node {
 
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	
+	 *	
+	 * @return	int
+	 */
 	public int updateSize() {
 
 		this.left.size = this.left.left.size + this.left.right.size + 1;
 		this.right.size = this.right.right.size + this.right.left.size + 1;
 		return this.right.size + this.left.size + 1;
 	}
-
+	
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	
+	 *	
+	 * @return	int
+	 */
 	public int updateRank() {
 
 		this.left.rank = this.left.left.size;
@@ -280,6 +407,13 @@ public class Node {
 		return this.left.size;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	
+	 *	
+	 * @return	
+	 */
 	public void updateNodeFields() {
 
 		this.height = this.updateHeight();
@@ -291,37 +425,58 @@ public class Node {
 		this.setNodeBalance();
 	}
 
-	public Node checkForRotation(Container c) {
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param container
+	 *	
+	 * @return	Node
+	 */
+	public Node checkForRotation(Container container) {
 
 		// Single Right
 		if ((right.height - left.height < -1)
 				&& (this.left.balance.equals(Code.LEFT) || this.left.balance.equals(Code.SAME))) {
-			return this.rotate(RotationCode.RIGHT, c);
+			return this.rotate(RotationCode.RIGHT, container);
 		}
 		// Single Left
 		else if ((right.height - left.height > 1)
 				&& (this.right.balance.equals(Code.RIGHT) || this.right.balance.equals(Code.SAME))) {
-			return this.rotate(RotationCode.LEFT, c);
+			return this.rotate(RotationCode.LEFT, container);
 		}
 		// Double Right
 		else if ((right.height - left.height < -1) && this.left.balance.equals(Code.RIGHT)) {
-			return this.rotate(RotationCode.DOUBLE_RIGHT, c);
+			return this.rotate(RotationCode.DOUBLE_RIGHT, container);
 		}
 		// Double Left
 		else if ((right.height - left.height > 1) && this.right.balance.equals(Code.LEFT)) {
-			return this.rotate(RotationCode.DOUBLE_LEFT, c);
+			return this.rotate(RotationCode.DOUBLE_LEFT, container);
 		}
 		return this;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * @param	
+	 *	
+	 * @return	Node
+	 */
 	public Node nodeSucessor() {
+		
 		if (this.left == NULL_NODE) {
 			return this;
 		}
 		return this.left.nodeSucessor();
 	}
-
+	
+	/**
+	 * NEEDS DESCRIPTION
+	 * @param position, container
+	 *	
+	 * @return	Node
+	 */
 	public Node delete(int position, Container container) {
+		
 		if (position < 0 || position >= this.size) {
 			throw new IndexOutOfBoundsException("Out of bounds");
 		}
@@ -345,21 +500,25 @@ public class Node {
 		}
 		// Searching left
 		else if (position < this.rank) {
-
 			this.left = this.left.delete(position, container);
 			this.rank--;
 		}
 		// Searching right
 		else if (position > this.rank) {
-
 			this.right = this.right.delete(position - (this.rank + 1), container);
 		}
-
 		this.updateNode();
 		this.setNodeBalance();
 		return this.checkForRotation(container);
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param oldTreeNode, e, container	
+	 *	
+	 * @return Node	
+	 */
 	public Node createTreeCopy(Node oldTreeNode, EditTree e, Container container) {
 
 		if (oldTreeNode == NULL_NODE) {
@@ -380,50 +539,60 @@ public class Node {
 		return this;
 	}
 
-	public Node concatenate(EditTree leftTree, EditTree rightTree, Node connectingNode, Node parent, Node p,
-			int pHeight, Container container) {
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param leftTree, rightTree, connectingNode, checkParent, checkNode, pHeight
+	 * container
+	 *	
+	 * @return	Node
+	 */
+	public Node concatenate(EditTree leftTree, EditTree rightTree, Node connectingNode,
+			Node checkParent, Node checkNode, int checkNodeHeight, Container container) {
 		// Determining the heights of both left and right trees
 		int heightOfLeftTree = leftTree.height();
 		int heightOfRightTree = rightTree.height();
 
-		// Case 1
+// 		Height of leftTree is greater than or equal height of rightTree
 		if (heightOfLeftTree >= heightOfRightTree) {
-			if ((pHeight - heightOfRightTree) > 1) {
-				if (p.balance.equals(Code.LEFT)) {
-					pHeight = pHeight - 2;
+			if ((checkNodeHeight - heightOfRightTree) > 1) {
+				if (checkNode.balance.equals(Code.LEFT)) {
+					checkNodeHeight = checkNodeHeight - 2;
 				} else {
-					pHeight = pHeight - 1;
+					checkNodeHeight = checkNodeHeight - 1;
 				}
-				parent = p;
-				p.right = concatenate(leftTree, rightTree, connectingNode, parent, p.right, pHeight, container);
-				p.updateNode();
-				p.setNodeBalance();
-				return p.checkForRotation(container);
+				checkParent = checkNode;
+				checkNode.right = concatenate(leftTree, rightTree, connectingNode,
+						checkParent, checkNode.right, checkNodeHeight, container);
+				checkNode.updateNode();
+				checkNode.setNodeBalance();
+				return checkNode.checkForRotation(container);
 			}
-			connectingNode.left = p;
+			connectingNode.left = checkNode;
 			connectingNode.right = rightTree.getRoot();
 			connectingNode.updateNode();
 			connectingNode.setNodeBalance();
-			if (parent != null) {
-				parent.right = connectingNode;
+			if (checkParent != null) {
+				checkParent.right = connectingNode;
 			}
 			return connectingNode.checkForRotation(container);
 		}
-		// Case 2
+// 		Height of leftTree is less than height of rightTree
 		else if (heightOfLeftTree < heightOfRightTree) {
-			if (pHeight - heightOfRightTree > 1) {
-				if (p.balance.equals(Code.RIGHT)) {
-					pHeight = pHeight - 2;
+			if (checkNodeHeight - heightOfRightTree > 1) {
+				if (checkNode.balance.equals(Code.RIGHT)) {
+					checkNodeHeight = checkNodeHeight - 2;
 				} else {
-					pHeight = pHeight - 1;
+					checkNodeHeight = checkNodeHeight - 1;
 				}
-				parent = p;
-				p.left = concatenate(leftTree, rightTree, connectingNode, parent, p.left, pHeight, container);
-				p.updateNode();
-				p.setNodeBalance();
-				return p.checkForRotation(container);
+				checkParent = checkNode;
+				checkNode.left = concatenate(leftTree, rightTree, connectingNode,
+						checkParent, checkNode.left, checkNodeHeight, container);
+				checkNode.updateNode();
+				checkNode.setNodeBalance();
+				return checkNode.checkForRotation(container);
 			}
-			connectingNode.right = p;
+			connectingNode.right = checkNode;
 			connectingNode.left = leftTree.getRoot();
 			connectingNode.updateNode();
 			connectingNode.setNodeBalance();
@@ -432,47 +601,28 @@ public class Node {
 			}
 			return connectingNode.checkForRotation(container);
 		}
-		return p;
+		return checkNode;
 	}
 
+	/**
+	 * NEEDS DESCRIPTION
+	 * 
+	 * @param	string
+	 *	
+	 * @return   Node
+	 */
 	public Node EditTree(String string) {
-		if(string.length() == 0) {
+		if (string.length() == 0) {
 			return NULL_NODE;
 		}
-		int rootCharIndex = (int)Math.floor((double)(string.length()/2));
+		int rootCharIndex = (int) Math.floor((double) (string.length() / 2));
 		this.element = string.charAt(rootCharIndex);
 		this.left = new Node();
 		this.left = this.left.EditTree(string.substring(0, rootCharIndex));
 		this.right = new Node();
-		this.right = this.right.EditTree(string.substring(rootCharIndex + 1,string.length()));
+		this.right = this.right.EditTree(string.substring(rootCharIndex + 1, string.length()));
 		this.updateNode();
-		
+
 		return this;
 	}
-
-	public int find(String s, int startIndex, int currentIndex, int count) {
-		ArrayList<Character> list = new ArrayList();
-		this.inOrder(list);
-		if (left != NULL_NODE) {
-			left.find(s,startIndex,currentIndex,count);
-		}
-		count++;
-		if (s.charAt(currentIndex) == this.element) {
-			
-			currentIndex ++;
-			if (currentIndex + 1 >= s.length()) {
-				return startIndex;
-			}
-		}
-		else {
-			currentIndex = 0;
-		}
-		if (right != NULL_NODE) {
-			right.find(s,startIndex, currentIndex,count);
-		}
-		return -1;
-	}
-
-	
-
 }

@@ -18,7 +18,7 @@ public class EditTree {
 		char charRemoved;
 
 		public Container() {
-			
+
 			maxIndex = 0;
 			size = 0;
 			rotationCount = 0;
@@ -52,7 +52,7 @@ public class EditTree {
 	 * @param e
 	 */
 	public EditTree(EditTree e) {
-		
+
 		Node newRoot = new Node(e.root.element);
 		this.root = newRoot.createTreeCopy(e.root, e, container);
 
@@ -267,7 +267,6 @@ public class EditTree {
 		for (int i = 0; i < length; i++) {
 			string.append(this.root.get(pos + i));
 		}
-
 		return string.toString();
 	}
 
@@ -283,13 +282,14 @@ public class EditTree {
 	 */
 	public void concatenate(EditTree rightTree) throws IllegalArgumentException {
 
+		// Need this as first check to have tests run properly
 		if (this == rightTree) {
-			throw new IllegalArgumentException("Cannot be same tree");
-		} else if (this.size() == 0) {
-			this.root = rightTree.root;
+			throw new IllegalArgumentException("Cannot concatenate the same tree");
+		} else if (rightTree.size() == 0) {
 			rightTree.root = NULL_NODE;
 			return;
-		} else if (rightTree.size() == 0) {
+		} else if (this.size() == 0) {
+			this.root = rightTree.root;
 			rightTree.root = NULL_NODE;
 			return;
 		} else {
@@ -358,8 +358,7 @@ public class EditTree {
 
 		if (this.root == NULL_NODE) {
 			return -1;
-		}
-		if (s.length() == 0) {
+		} else if (s.length() == 0) {
 			return 0;
 		}
 		String string = this.toString();
