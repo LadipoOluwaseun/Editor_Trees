@@ -11,12 +11,12 @@ public class EditTree {
 	public Container container = new Container();
 
 	public class Container {
-		
+
 		int maxIndex;
 		int size;
 		int rotationCount;
 		char charRemoved;
-		
+
 		public Container() {
 			maxIndex = 0;
 			size = 0;
@@ -28,7 +28,7 @@ public class EditTree {
 	 * MILESTONE 1 Construct an empty tree
 	 */
 	public EditTree() {
-		
+
 		root = NULL_NODE;
 		container.size = 0;
 	}
@@ -39,7 +39,7 @@ public class EditTree {
 	 * @param ch
 	 */
 	public EditTree(char ch) {
-		
+
 		root = new Node(ch);
 		this.container.size++;
 	}
@@ -52,8 +52,8 @@ public class EditTree {
 	 */
 	public EditTree(EditTree e) {
 		Node newRoot = new Node(e.root.element);
-		this.root = newRoot.createTreeCopy(e.root,e,container);
-		
+		this.root = newRoot.createTreeCopy(e.root, e, container);
+
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class EditTree {
 	 * @param s
 	 */
 	public EditTree(String s) {
-		
+
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class EditTree {
 	 * @return number of rotations since this tree was created.
 	 */
 	public int totalRotationCount() {
-		
+
 		return container.rotationCount; // replace by a real calculation.
 	}
 
@@ -85,7 +85,7 @@ public class EditTree {
 	 */
 	@Override
 	public String toString() {
-		
+
 		if (root == NULL_NODE) {
 			return "";
 		}
@@ -114,7 +114,7 @@ public class EditTree {
 	 *         pre-order traversal of the tree.
 	 */
 	public String toDebugString() {
-		
+
 		if (root == NULL_NODE) {
 			return "[]";
 		}
@@ -158,11 +158,11 @@ public class EditTree {
 	 *             if pos is negative or too large for this tree
 	 */
 	public void add(char ch, int position) throws IndexOutOfBoundsException {
-		
+
 		if (this.root == Node.NULL_NODE) {
 			if (position != 0) {
 				throw new IndexOutOfBoundsException("Need to add adjacent to other elements");
-			} 
+			}
 			this.root = new Node(ch);
 			this.container.size++;
 		} else if (position < 0) {
@@ -222,11 +222,11 @@ public class EditTree {
 		// The tests assume assume that you will replace it with the
 		// *successor*.
 
-		if(this.root == NULL_NODE) {
+		if (this.root == NULL_NODE) {
 			throw new IndexOutOfBoundsException("Empty tree");
 		}
 		this.root = this.root.delete(pos, this.container);
-//		Passed container stores the char of the node being deleted
+		// Passed container stores the char of the node being deleted
 		container.size--;
 		return this.container.charRemoved; // replace by a real calculation.
 	}
@@ -258,8 +258,31 @@ public class EditTree {
 	 * @throws IllegalArgumentException
 	 *             if this == other
 	 */
-	public void concatenate(EditTree other) throws IllegalArgumentException {
-
+	public void concatenate(EditTree rightTree) throws IllegalArgumentException {
+		if (rightTree.size() == 0) {
+			rightTree.root = NULL_NODE;
+			return;
+		} else if (this.size() == 0) {
+			this.root = rightTree.root;
+			rightTree.root = NULL_NODE;
+			return;
+		} else if (this == rightTree) {
+			throw new IllegalArgumentException("Cannot be same tree");
+		} else {
+			// Case of left tree smaller than right tree
+			if (this.height() < rightTree.height()) {
+				Node connectingNode = new Node(this.delete(this.size() - 1));
+				this.root = this.root.concatenate(this, rightTree, connectingNode, null, rightTree.root,
+						rightTree.height(), this.container);
+			}
+			// Case of left tree bigger than or equal to right tree
+			else {
+				Node connectingNode = new Node(rightTree.delete(0));
+				this.root = this.root.concatenate(this, rightTree, connectingNode, null, this.root, this.height(),
+						this.container);
+			}
+		}
+		rightTree.root = NULL_NODE;
 	}
 
 	/**

@@ -39,7 +39,7 @@ public class Node {
 	Node left, right, parent;
 	int rank, size;
 	Code balance;
-	
+
 	public static final Node NULL_NODE = new Node();
 
 	public Node(Character data) {
@@ -56,7 +56,7 @@ public class Node {
 	}
 
 	public Node() {
-		
+
 		this.left = null;
 		this.right = null;
 		this.height = -1;
@@ -65,20 +65,20 @@ public class Node {
 	}
 
 	public int height() {
-		
+
 		return this.height;
 	}
 
 	public int size() {
-		
+
 		if (this == NULL_NODE) {
 			return 0;
 		}
 		return this.right.size() + this.rank + 1;
 	}
-	
+
 	public ArrayList<Character> inOrder(ArrayList<Character> list) {
-		
+
 		if (left != NULL_NODE) {
 			left.inOrder(list);
 		}
@@ -90,7 +90,7 @@ public class Node {
 	}
 
 	public ArrayList<String> inOrderDebug(ArrayList<String> list) {
-		
+
 		String toAdd = new String();
 		toAdd += this.element;
 		toAdd += this.rank;
@@ -106,7 +106,7 @@ public class Node {
 	}
 
 	public void setNodeBalance() {
-		
+
 		if (right.height - left.height == -1) {
 			this.balance = Code.LEFT;
 		} else if (left.height - right.height == 0) {
@@ -115,16 +115,16 @@ public class Node {
 			this.balance = Code.RIGHT;
 		}
 	}
-	
+
 	public Node add(char ch, Container container) {
-		
+
 		if (this == NULL_NODE) {
 			return new Node(ch);
 		}
 		this.right = this.right.add(ch, container);
 		this.height = Math.max(this.left.height, this.right.height) + 1;
 		this.size++;
-		
+
 		this.setNodeBalance();
 		return this.checkForRotation(container);
 	}
@@ -136,7 +136,7 @@ public class Node {
 	 * @return Node
 	 */
 	public Node add(char ch, int position, Container container) {
-		
+
 		if (position < this.rank) {
 			if (this.left == NULL_NODE) {
 				this.left = new Node(ch);
@@ -160,7 +160,7 @@ public class Node {
 				this.right = this.right.add(ch, position - (this.rank + 1), container);
 			}
 		}
-		
+
 		this.updateNode();
 		this.setNodeBalance();
 		return this.checkForRotation(container);
@@ -313,58 +313,55 @@ public class Node {
 		}
 		return this;
 	}
-	
+
 	public Node nodeSucessor() {
-		if(this.left == NULL_NODE) {
+		if (this.left == NULL_NODE) {
 			return this;
 		}
 		return this.left.nodeSucessor();
 	}
-	
-	
+
 	public Node delete(int position, Container container) {
-		if(position < 0 || position >= this.size) {
+		if (position < 0 || position >= this.size) {
 			throw new IndexOutOfBoundsException("Out of bounds");
 		}
-//		When we find the actual Position
+		// When we find the actual Position
 		if (position == this.rank) {
 			container.charRemoved = this.element;
-//		4 cases 
+			// 4 cases
 			if (this.left != NULL_NODE && this.right != NULL_NODE) {
-				Node toReturn = this.right.nodeSucessor(); 
+				Node toReturn = this.right.nodeSucessor();
 				container.charRemoved = this.element;
 				this.right = this.right.delete(0, container);
 				this.element = toReturn.element;
 
-			}
-			else if (this.left == NULL_NODE && this.right == NULL_NODE) {
+			} else if (this.left == NULL_NODE && this.right == NULL_NODE) {
 				return NULL_NODE;
-			}
-			else if (this.left != NULL_NODE) {
+			} else if (this.left != NULL_NODE) {
 				return this.left;
+			} else if (this.right != NULL_NODE) {
+				return this.right;
 			}
-			else if (this.right != NULL_NODE) {
-				return this.right;			}
 		}
-//		Searching left
+		// Searching left
 		else if (position < this.rank) {
-			
+
 			this.left = this.left.delete(position, container);
 			this.rank--;
-		} 
-//		Searching right
+		}
+		// Searching right
 		else if (position > this.rank) {
-			
+
 			this.right = this.right.delete(position - (this.rank + 1), container);
 		}
-		
+
 		this.updateNode();
 		this.setNodeBalance();
 		return this.checkForRotation(container);
 	}
 
 	public Node createTreeCopy(Node oldTreeNode, EditTree e, Container container) {
-		
+
 		if (oldTreeNode == NULL_NODE) {
 			return NULL_NODE;
 		}
@@ -374,13 +371,68 @@ public class Node {
 		this.height = oldTreeNode.height;
 		this.rank = oldTreeNode.rank;
 		this.size = oldTreeNode.size;
-//		Creates news nodes with the information copied over
+		// Creates news nodes with the information copied over
 		this.left = new Node(oldTreeNode.left.element);
 		this.right = new Node(oldTreeNode.right.element);
-//		Recursive calls
+		// Recursive calls
 		this.left = this.left.createTreeCopy(oldTreeNode.left, e, container);
 		this.right = this.right.createTreeCopy(oldTreeNode.right, e, container);
 		return this;
+	}
+
+	public Node concatenate(EditTree leftTree, EditTree rightTree, Node connectingNode, Node parent, Node p,
+			int pHeight, Container container) {
+		// Determining the heights of both left and right trees
+		int heightOfLeftTree = leftTree.height();
+		int heightOfRightTree = rightTree.height();
+
+		// Case 1
+		if (heightOfLeftTree >= heightOfRightTree) {
+			if ((pHeight - heightOfRightTree) > 1) {
+				if (p.balance.equals(Code.LEFT)) {
+					pHeight = pHeight - 2;
+				} else {
+					pHeight = pHeight - 1;
+				}
+				parent = p;
+				p.right = concatenate(leftTree, rightTree, connectingNode, parent, p, pHeight, container);
+				p.updateNode();
+				p.setNodeBalance();
+				return p.checkForRotation(container);
+			}
+			connectingNode.left = p;
+			connectingNode.right = rightTree.getRoot();
+			connectingNode.updateNode();
+			connectingNode.setNodeBalance();
+			if (parent != null) {
+				parent.right = connectingNode;
+			}
+			return connectingNode.checkForRotation(container);
+		}
+		// Case 2
+		else if (heightOfLeftTree < heightOfRightTree) {
+			if (pHeight - heightOfRightTree > 1) {
+				if (p.balance.equals(Code.RIGHT)) {
+					pHeight = pHeight - 2;
+				} else {
+					pHeight = pHeight - 1;
+				}
+				parent = p;
+				p.left = concatenate(leftTree, rightTree, connectingNode, parent, p, pHeight, container);
+				p.updateNode();
+				p.setNodeBalance();
+				return p.checkForRotation(container);
+			}
+			connectingNode.right = p;
+			connectingNode.left = leftTree.getRoot();
+			connectingNode.updateNode();
+			connectingNode.setNodeBalance();
+			if (parent != null) {
+				parent.left = connectingNode;
+			}
+			return connectingNode.checkForRotation(container);
+		}
+		return p;
 	}
 
 }
