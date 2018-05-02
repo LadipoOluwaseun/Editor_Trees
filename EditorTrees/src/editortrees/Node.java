@@ -29,13 +29,13 @@ public class Node {
 			}
 		}
 	}
-
+	// Enumeration signaling when to do rotations
 	enum RotationCode {
 
 		LEFT, RIGHT, DOUBLE_RIGHT, DOUBLE_LEFT;
 	}
 
-	// Fields
+	// Fields used in the Node Class
 	char element;
 	Node left, right, parent;
 	int rank, size;
@@ -64,8 +64,9 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
-	 * 
+	 *initialization of the NULL_NODE a node that is used to 
+	 *take the place of any Node with null parameters
+	 *
 	 * @param
 	 * 
 	 * @return
@@ -80,7 +81,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Returns the height of a Node held in a field
 	 * 
 	 * @param
 	 * 
@@ -92,7 +93,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Returns the size of a node that is calculated in this method
 	 * 
 	 * @param
 	 * 
@@ -107,7 +108,8 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Returns an ArrayList of Characters that is an in order 
+	 * traversal of a Binary Tree
 	 * 
 	 * @param list
 	 * 
@@ -126,7 +128,9 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Returns an ArrayList of Characters that is an in order 
+	 * traversal of a Binary Tree. Also returns the element 
+	 * rank and balance code of that node.
 	 * 
 	 * @param list
 	 * 
@@ -149,7 +153,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Sets the balance code fields of a node when called.
 	 * 
 	 * @param
 	 * 
@@ -167,7 +171,8 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Adds a node to the end of Binary Tree. 
+	 * Ex. ABCDEFG[H] (the position with Brackets)
 	 * 
 	 * @param ch,
 	 *            container
@@ -188,7 +193,7 @@ public class Node {
 	}
 
 	/**
-	 * Adds a node character node at a certain position in the tree
+	 * Adds a node character node at a certain specified position in the tree.
 	 * 
 	 * @param ch,
 	 *            position, container
@@ -227,7 +232,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Gets the character of a node in a specified position.
 	 * 
 	 * @param position
 	 * 
@@ -252,7 +257,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Performs a single left rotation on a set of nodes.
 	 * 
 	 * @param node,
 	 *            container
@@ -271,7 +276,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Performs a single right rotation on a set of nodes.
 	 * 
 	 * @param node,
 	 *            container
@@ -290,7 +295,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Performs a double right rotation on a set of nodes.
 	 * 
 	 * @param node,
 	 *            container
@@ -314,7 +319,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Performs a double left rotation on a set of nodes.
 	 * 
 	 * @param node,
 	 *            container
@@ -338,7 +343,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * cCalls the relevant rotation based upon what Enumeration is specified in this method. 
 	 * 
 	 * @param rotateEnum,
 	 *            container
@@ -362,7 +367,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Updated all the fields in the Node Class. (height, size, rank, and balance)
 	 * 
 	 * @param
 	 * 
@@ -377,7 +382,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Updates the height of a node.
 	 * 
 	 * @param
 	 * 
@@ -392,7 +397,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Updates the size of a node.
 	 * 
 	 * @param
 	 * 
@@ -406,7 +411,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Updates the rank of a node.
 	 * 
 	 * @param
 	 * 
@@ -420,7 +425,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Updated all the fields in the Node class.
 	 * 
 	 * @param
 	 * 
@@ -438,7 +443,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Checks if the specified node needs a rotation performed upon it.
 	 * 
 	 * @param container
 	 * 
@@ -468,7 +473,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Returns the left most child of a Node.
 	 * 
 	 * @param
 	 * 
@@ -483,7 +488,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Deletes the node at the specified position.
 	 * 
 	 * @param position,
 	 *            container
@@ -528,7 +533,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Takes a tree and copies the entire tree.
 	 * 
 	 * @param oldTreeNode,
 	 *            e, container
@@ -556,7 +561,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Takes two trees and merges them together making one version larger version of the two.
 	 * 
 	 * @param leftTree,
 	 *            rightTree, connectingNode, checkParent, checkNode, pHeight
@@ -622,7 +627,7 @@ public class Node {
 	}
 
 	/**
-	 * NEEDS DESCRIPTION
+	 * Constructs a new tree based upon a string given method.
 	 * 
 	 * @param string
 	 * 
