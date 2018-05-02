@@ -193,8 +193,7 @@ public class EditTree {
 
 		if (position < 0 || position >= this.size()) {
 			throw new IndexOutOfBoundsException("Out of bounds");
-		}
-		if (root == NULL_NODE) {
+		} else if (root == NULL_NODE) {
 			throw new IndexOutOfBoundsException("Empty tree");
 		}
 		return this.root.get(position);
@@ -229,7 +228,7 @@ public class EditTree {
 	 * @return the character that is deleted
 	 * @throws IndexOutOfBoundsException
 	 */
-	public char delete(int pos) throws IndexOutOfBoundsException {
+	public char delete(int position) throws IndexOutOfBoundsException {
 		// Implementation requirement:
 		// When deleting a node with two children, you normally replace the
 		// node to be deleted with either its in-order successor or predecessor.
@@ -239,7 +238,7 @@ public class EditTree {
 		if (this.root == NULL_NODE) {
 			throw new IndexOutOfBoundsException("Empty tree");
 		}
-		this.root = this.root.delete(pos, this.container);
+		this.root = this.root.delete(position, this.container);
 		// Passed container stores the char of the node being deleted
 		container.size--;
 		return this.container.charRemoved; // replace by a real calculation.
@@ -258,14 +257,14 @@ public class EditTree {
 	 *             unless both pos and pos+length-1 are legitimate indexes
 	 *             within this tree.
 	 */
-	public String get(int pos, int length) throws IndexOutOfBoundsException {
+	public String get(int position, int length) throws IndexOutOfBoundsException {
 
-		if (pos < 0 || pos + length > this.size()) {
+		if (position < 0 || position + length > this.size()) {
 			throw new IndexOutOfBoundsException("Out of bounds");
 		}
 		StringBuilder string = new StringBuilder();
 		for (int i = 0; i < length; i++) {
-			string.append(this.root.get(pos + i));
+			string.append(this.root.get(position + i));
 		}
 		return string.toString();
 	}

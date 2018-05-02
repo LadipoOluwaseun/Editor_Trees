@@ -9,12 +9,12 @@ import editortrees.EditTree.Container;
 // belong to two different trees.
 
 public class Node {
-	public int height = 0;// Field to track the height in the tree
+	public int height = 0;
 
-	// Enumeration for the balance codes of each node
+	// Enumeration for the balance codes.
 	enum Code {
 		SAME, LEFT, RIGHT;
-		// Used in the displayer and debug string
+
 		@Override
 		public String toString() {
 			switch (this) {
@@ -29,13 +29,14 @@ public class Node {
 			}
 		}
 	}
-	// Enumeration signaling when to do rotations
+
+	// Enumeration signaling when to do rotations.
 	enum RotationCode {
 
 		LEFT, RIGHT, DOUBLE_RIGHT, DOUBLE_LEFT;
 	}
 
-	// Fields used in the Node Class
+	// Fields used in the Node Class.
 	char element;
 	Node left, right, parent;
 	int rank, size;
@@ -44,7 +45,7 @@ public class Node {
 	public static final Node NULL_NODE = new Node();
 
 	/**
-	 * Creates a new node with the given character passed as a parameter
+	 * Creates a new node with the given character passed as a parameter.
 	 * 
 	 * @param data
 	 * 
@@ -64,8 +65,8 @@ public class Node {
 	}
 
 	/**
-	 *initialization of the NULL_NODE a node that is used to 
-	 *take the place of any Node with null parameters
+	 * Initialization of the NULL_NODE a node that is used to take the place of
+	 * any Node with null parameters.
 	 *
 	 * @param
 	 * 
@@ -81,7 +82,7 @@ public class Node {
 	}
 
 	/**
-	 * Returns the height of a Node held in a field
+	 * Returns the height of a Node held in a field.
 	 * 
 	 * @param
 	 * 
@@ -93,7 +94,7 @@ public class Node {
 	}
 
 	/**
-	 * Returns the size of a node that is calculated in this method
+	 * Returns the size of a node that is calculated in this method.
 	 * 
 	 * @param
 	 * 
@@ -108,8 +109,8 @@ public class Node {
 	}
 
 	/**
-	 * Returns an ArrayList of Characters that is an in order 
-	 * traversal of a Binary Tree
+	 * Returns an ArrayList of Characters that is an in order traversal of a
+	 * Binary Tree.
 	 * 
 	 * @param list
 	 * 
@@ -128,9 +129,8 @@ public class Node {
 	}
 
 	/**
-	 * Returns an ArrayList of Characters that is an in order 
-	 * traversal of a Binary Tree. Also returns the element 
-	 * rank and balance code of that node.
+	 * Returns an ArrayList of Characters that is an in order traversal of a
+	 * Binary Tree. Also returns the element rank and balance code of that node.
 	 * 
 	 * @param list
 	 * 
@@ -171,8 +171,8 @@ public class Node {
 	}
 
 	/**
-	 * Adds a node to the end of Binary Tree. 
-	 * Ex. ABCDEFG[H] (the position with Brackets)
+	 * Adds a node to the end of Binary Tree. Ex. ABCDEFG[H] (the position with
+	 * Brackets).
 	 * 
 	 * @param ch,
 	 *            container
@@ -202,19 +202,19 @@ public class Node {
 	 */
 	public Node add(char ch, int position, Container container) {
 
-		if (position < this.rank) {
-			if (this.left == NULL_NODE) {
-				this.left = new Node(ch);
-			}
-			this.left = this.left.add(ch, position, container);
-			this.rank++;
-		} else if (position == this.rank) {
+		if (position == this.rank) {
 			this.rank++;
 			if (this.left == NULL_NODE) {
 				this.left = new Node(ch);
 			} else {
 				this.left = this.left.add(ch, position, container);
 			}
+		} else if (position < this.rank) {
+			if (this.left == NULL_NODE) {
+				this.left = new Node(ch);
+			}
+			this.left = this.left.add(ch, position, container);
+			this.rank++;
 		} else {
 			if (this.right == NULL_NODE) {
 				if (position - this.rank > 1) {
@@ -269,7 +269,7 @@ public class Node {
 		node = this.right;
 		this.right = this.right.left;
 		node.left = this;
-		
+
 		node.updateNodeFields();
 		container.rotationCount++;
 		return node;
@@ -288,7 +288,7 @@ public class Node {
 		node = this.left;
 		this.left = this.left.right;
 		node.right = this;
-		
+
 		node.updateNodeFields();
 		container.rotationCount++;
 		return node;
@@ -312,7 +312,7 @@ public class Node {
 		node.left = this.left;
 		this.left = temp2;
 		node.right = this;
-		
+
 		node.updateNodeFields();
 		container.rotationCount += 2;
 		return node;
@@ -336,14 +336,15 @@ public class Node {
 		node.right = this.right;
 		this.right = temp2;
 		node.left = this;
-		
+
 		node.updateNodeFields();
 		container.rotationCount += 2;
 		return node;
 	}
 
 	/**
-	 * cCalls the relevant rotation based upon what Enumeration is specified in this method. 
+	 * Calls the relevant rotation based upon what Enumeration is specified in
+	 * this method.
 	 * 
 	 * @param rotateEnum,
 	 *            container
@@ -367,21 +368,6 @@ public class Node {
 	}
 
 	/**
-	 * Updated all the fields in the Node Class. (height, size, rank, and balance)
-	 * 
-	 * @param
-	 * 
-	 * @return
-	 */
-	public void updateNode() {
-
-		this.height = Math.max(this.left.height, this.right.height) + 1;
-		this.size = this.left.size + this.right.size + 1;
-		this.rank = this.left.size;
-		this.setNodeBalance();
-	}
-
-	/**
 	 * Updates the height of a node.
 	 * 
 	 * @param
@@ -394,6 +380,22 @@ public class Node {
 		this.left.height = 1 + Math.max(this.left.right.height, this.left.left.height);
 		return 1 + Math.max(this.left.height, this.right.height);
 
+	}
+
+	/**
+	 * Updated all the fields in the Node Class. (height, size, rank, and
+	 * balance)
+	 * 
+	 * @param
+	 * 
+	 * @return
+	 */
+	public void updateNode() {
+
+		this.height = Math.max(this.left.height, this.right.height) + 1;
+		this.size = this.left.size + this.right.size + 1;
+		this.rank = this.left.size;
+		this.setNodeBalance();
 	}
 
 	/**
@@ -561,7 +563,8 @@ public class Node {
 	}
 
 	/**
-	 * Takes two trees and merges them together making one version larger version of the two.
+	 * Takes two trees and merges them together making one version larger
+	 * version of the two.
 	 * 
 	 * @param leftTree,
 	 *            rightTree, connectingNode, checkParent, checkNode, pHeight
