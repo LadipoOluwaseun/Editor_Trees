@@ -273,6 +273,7 @@ public class Node {
 		node.updateNodeFields();
 		container.rotationCount++;
 		return node;
+		
 	}
 
 	/**
